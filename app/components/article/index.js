@@ -16,7 +16,6 @@ var ArticleBox = React.createClass({
     return this.props;
   },
   componentDidMount: function(){
-    console.log(this.props);
     var search=common.getQueryParams(this.props.location.search);
     common.ajax({
       url: search.path+this.props.params.id,
