@@ -1,0 +1,24 @@
+@blue: #00c1ff;
+article{
+  width: 60%;
+  margin: 0 auto;
+  word-break: break-all;
+  h1,h2,h3,h4,h5,h6{
+    font-weight: 300;
+    text-align: center;
+    color: @blue;
+  }
+  .content{
+    padding: 2rem;
+    font-size: 1rem;
+  }
+}
+
+
+// 竖屏优化
+@media (max-width: 1200px){
+  article{
+    width: 90%;
+    margin: 0;
+  }
+}

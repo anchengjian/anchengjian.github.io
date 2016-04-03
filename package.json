@@ -1,0 +1,31 @@
+{
+  "name": "react-webpack",
+  "version": "1.0.0",
+  "description": "My first React && Webpack project!",
+  "main": "app/main.js",
+  "scripts": {
+    "dev": "webpack-dev-server --hot --devtool eval --progress --colors --content-base --host 0.0.0.0",
+    "deploy": "NODE_ENV=production webpack -p --config webpack.production.config.js",
+    "list": "node ./app/list.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Chester",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-loader": "^5.3.2",
+    "css-loader": "^0.16.0",
+    "less-loader": "^2.2.0",
+    "react": "^0.13.3",
+    "react-hot-loader": "^1.2.9",
+    "style-loader": "^0.12.3",
+    "webpack": "^1.11.0",
+    "webpack-dev-server": "^1.10.1",
+    "jsx-loader": "^0.13.2"
+  },
+  "dependencies": {
+    "autoprefixer-loader": "^3.2.0",
+    "file-loader": "^0.8.5",
+    "react-router": "^2.0.1",
+    "url-loader": "^0.5.7"
+  }
+}
