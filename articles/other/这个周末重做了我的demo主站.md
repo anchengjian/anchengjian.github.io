@@ -14,7 +14,7 @@ demo主站在本博客的主导航中点击"demo"按钮也可进，附地址：[
 
 比如scrollTop的问题，三大浏览器就三大标准，而且往常很多人忽略了safir浏览器（可能我们都是穷吊）。
 
-``` JavaScript
+```JavaScript
 //scroll平滑移动效果
 function scrollMove(iTarget, time) {
     clearInterval(timer);

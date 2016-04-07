@@ -16,6 +16,7 @@ function walk(path){
       data.name=item;
       data.path=path+'/';
       delete data.dev;
+      delete data.ctime
       delete data.mode;
       delete data.nlink;
       delete data.uid;

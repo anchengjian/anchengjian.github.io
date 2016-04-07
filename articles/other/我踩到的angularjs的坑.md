@@ -12,7 +12,7 @@
 
 粗看一下，angular和jQuery的post用法差不多，但是为什么就是接收不了呢？哈哈，这是因为两者的post对header的处理有所不同，jQuery会把作为JSON对象的postData序列化，例如：
 
-``` JavaScript
+```JavaScript
 var postData={
     "name":"admin",
     "pwd:"123123"
@@ -26,7 +26,7 @@ var postData={
 通过 `$params = json_decode(file_get_contents('php://input'),true);` 来获取数据 
 
 针对前端，又细分了两种方法。
-``` JavaScript
+```JavaScript
 //全局的更改post数据序列化
 var app = angular.module("app", ["ngRoute", "$httpProvider",
 function($httpProvider) {
@@ -73,7 +73,7 @@ function($httpProvider) {
 
 或者局部的引用
 
-``` JavaScript
+```JavaScript
 //首先创建两个函数
 // angular post json to form
 
@@ -134,7 +134,7 @@ $scope.login = function() {
 一般而言，我们页面是由angular自己$compile完成后展现出来的。而你新插入的文档dom又没有经过$compile，直接展现的，所以。会出现那些事件不能用，那么该怎么办呢？哈哈，当然还是文档啦：[http://docs.ngnice.com/api/ng/service/$compile](http://docs.ngnice.com/api/ng/service/$compile) 。。。
 
 下面给个最简单的解决办法，直接用就行了：
-``` JavaScript
+```JavaScript
 // 默认的model是app啊，创建一个directive
 app.directive('dir',
 function($compile, $parse) {
@@ -157,14 +157,14 @@ $scope.msgOperation="<span>点此 <a href='javascript:;' ng-click='getUserInfo()
 ```
 
 3、用
-``` JavaScript
+```JavaScript
 $routeProvider.when('/user/:id', {
     templateUrl: 'partials/user.html',
     controller: 'userCtrl'
 })
 ```
 的方式传了id后，在controller用$routeParams.id的方式不能获取参数的坑。具体的还是要看文档：[http://docs.ngnice.com/api/ngRoute/service/$routeParams](http://docs.ngnice.com/api/ngRoute/service/$routeParams) 大意是当时还为解析完成就进行了获取。最简单的解决方法，文档里面已经说了，但是我还是要说一下。
-``` JavaScript
+```JavaScript
 //$route.current.params会解析url地址中的参数，如上获取id值的方法
 $route.current.params.id 
 ```

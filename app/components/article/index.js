@@ -2,12 +2,27 @@
 
 var React = require('react'),
     style = require('./style.less'),
+    highlightCss = require('../../libs/agate.min.css'),
     common = require('../common'),
-    markdown = require('../../libs/Markdown.Converter.js'),
+    marked = require('marked'),
     article = {
       title:null,
       description:null
     };
+
+marked.setOptions({
+  renderer: new marked.Renderer(),
+  gfm: true,
+  tables: true,
+  breaks: true,
+  pedantic: true,
+  sanitize: true,
+  smartLists: true,
+  smartypants: false,
+  highlight: function (code) {
+    return require('../../libs/highlight.min.js').highlightAuto(code).value;
+  }
+});
 
 function createMarkup() { return {__html: article.description}; };
 
@@ -23,7 +38,7 @@ var ArticleBox = React.createClass({
       data: {},
       success: function(res){
         article.title=this.props.params.id;
-        article.description=new markdown.Converter().makeHtml(res);
+        article.description=marked(res);
         this.setState(article);
       }.bind(this)
     });
@@ -31,7 +46,6 @@ var ArticleBox = React.createClass({
   render: function (){
     return (
       <article>
-        <h2>{article.title}</h2>
         <div className='content' dangerouslySetInnerHTML={createMarkup()} />
       </article>
     );

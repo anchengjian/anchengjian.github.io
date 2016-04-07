@@ -26,7 +26,7 @@
 
 > 1.  Include the PIE.js script in your page, surrounded by a conditional comment to prevent it from being downloaded in other browsers:
 
-``` html
+```html
 <!--[if IE]>
     <script type="text/javascript" src="path/to/PIE.js"></script>
 <![endif]-->
@@ -34,7 +34,7 @@
 
 > Note: The code above is for PIE.js 1.0; if you are using a PIE 2.0 beta build, then you will need to include the appropriate JS file for the current IE version:
 
-``` html
+```html
 <!--[if lt IE 9]>
     <script type="text/javascript" src="path/to/PIE_IE678.js"></script>
 <![endif]-->
@@ -45,7 +45,7 @@
 
 > 2.  Invoke the PIE.attach(el) function for each element that needs CSS3 styling. Make sure you do this after the page's DOM has been fully loaded. For example, using jQuery:
 
-``` html
+```html
 $(function() {
     if (window.PIE) {
         $('.rounded').each(function() {
@@ -68,7 +68,7 @@ $(function() {
 
 下面说这个属性的兼容IE的方法，在css里面直接加上这个：
 
-``` css
+```css
 background:url(upload/5.jpg);
 background-size:100% auto;
 filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='upload/5.jpg',sizingMethod='scale'); 
