@@ -6,6 +6,7 @@
 html,body{
   color: @fontc;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   margin: 0;
   padding: 0;
   width: 100%;
@@ -44,11 +45,12 @@ a{
   border: 1px solid rgba(181, 172, 149, 0.4);
   background-color: @bgc;
   padding: .6rem 2rem;
-  font-size: 12px;
+  font-size: 14px;
   color: #b5ac95;
   border-radius: 4px;
   margin: .5rem;
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
 
 .center-block{
