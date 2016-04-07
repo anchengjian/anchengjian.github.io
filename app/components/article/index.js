@@ -1,7 +1,6 @@
 'use strict';
 
 var React = require('react'),
-    style = require('./style.less'),
     highlightCss = require('../../libs/agate.min.css'),
     common = require('../common'),
     marked = require('marked'),
@@ -46,7 +45,7 @@ var ArticleBox = React.createClass({
   render: function (){
     return (
       <article>
-        <div className='content' dangerouslySetInnerHTML={createMarkup()} />
+      <div className='content' dangerouslySetInnerHTML={createMarkup()} />
       </article>
     );
   }

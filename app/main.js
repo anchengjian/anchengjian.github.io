@@ -8,6 +8,7 @@
       ArticleList = require('./components/articleList'),
       Article = require('./components/article'),
       NoMatch = require('./components/404'),
+      theme = require('./themes/default.less'),
       Router = ReactRouter.Router,
       Route = ReactRouter.Route,
       Link = ReactRouter.Link,

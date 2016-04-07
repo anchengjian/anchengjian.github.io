@@ -2,7 +2,6 @@
 
 var React = require('react'),
     ReactRouter = require('react-router'),
-    style=require('./style.less'),
     DateFormat=require('../../libs/dateFormat.js'),
     Router = ReactRouter.Router,
     Route = ReactRouter.Route,

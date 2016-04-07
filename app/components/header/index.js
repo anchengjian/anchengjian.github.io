@@ -1,7 +1,6 @@
 'use strict';
 
-var React = require('react'),
-    style = require('./style.less');
+var React = require('react');
 
 var HeaderBox = React.createClass({
   getInitialState: function(){

@@ -17,8 +17,8 @@
           docEl.classList.remove('horizontal');
           docEl.classList.add('vertical');
         }
-        if (clientWidth > 512) clientWidth=512;
-        docEl.style.fontSize = Math.floor(10 * (clientWidth / 320)) + 'px';
+        if (clientWidth > 640) clientWidth=640;
+        docEl.style.fontSize = ~~(10 * (clientWidth / 320)) + 'px';
       };
   if (!doc.addEventListener) return;
   win.addEventListener(resizeEvt, recalc, false);
