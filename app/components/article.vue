@@ -1,5 +1,6 @@
 <template>
   <section class="container">
+    <spinner :show="!posts.content"></spinner>
     <h1 class="post-title">{{posts.title}}</h1>
     <article class="post" v-html="posts.content | marked"></article>
   </section>

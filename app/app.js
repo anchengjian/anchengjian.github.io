@@ -5,12 +5,14 @@ import header from './components/header.vue';
 import footer from './components/footer.vue';
 import postsList from './components/posts-list.vue';
 import article from './components/article.vue';
+import spinner from './components/spinner.vue';
 
 Vue.component('app', app);
 Vue.component('my-header', header);
 Vue.component('my-footer', footer);
 Vue.component('posts-list', postsList);
 Vue.component('my-article', article);
+Vue.component('spinner', spinner);
 
 import dateFilter from './filters/date.filter.js';
 Vue.filter('date', dateFilter);

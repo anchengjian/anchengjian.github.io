@@ -1,5 +1,6 @@
 <template>
   <section class="container">
+    <spinner :show="!articles"></spinner>
     <ul class="posts-list">
       <li v-for="post in articles" class="item">
         <a v-link="{path:'/article/'+post.name}">
