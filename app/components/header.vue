@@ -1,0 +1,58 @@
+<template>
+  <header class="header-warp">
+    <section class="container header-content">
+      <img :src="user.headurl" class="avatar" alt="{{user.name}}">
+      <h2 class="name">{{user.name}}</h2>
+      <h3 class="title">{{user.title}}</h3>
+
+      <nav class="main-nav">
+        <a v-link="{ path: '/' }" class="btn btn-link">首页</a>
+        <!-- <a v-link="{ path: '/about' }" class="btn btn-link">关于</a> -->
+      </nav>
+    </section>
+  </header>
+</template>
+
+<script>
+  export default {
+    props: ['user']
+  };
+</script>
+
+<style lang="sass">
+  .header-warp{
+    position: relative;
+    z-index: 1;
+    padding: 40px 0 20px;
+    background-color: #fff;
+    text-align: center;
+
+    .header-content{
+      z-index: 10;
+    }
+    .name{
+      display: inline-block;
+      font-weight: 400;
+      letter-spacing: 0;
+      font-size: 20px;
+      color: #222;
+    }
+    .title{
+      font-size: 14px;
+      font-weight: 300;
+      color: #aaa;
+    }
+    .avatar{
+      display: block;
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 15px;
+      border-radius: 50%;
+    }
+    .main-nav{
+      position: absolute;
+      top: 10px;
+      right: 50px;
+    }
+  }
+</style>
