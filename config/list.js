@@ -1,46 +1,37 @@
 const fs = require('fs');
 
-var fileList = [];
+let fileList = walk('./articles', read);
 
-function walk(path) {
-  var dirList = fs.readdirSync(path);
+fileList.sort((a, b) => {
+  return b.birthtime - a.birthtime;
+});
 
-  dirList.forEach(function (item) {
-
-    if (item === '.DS_Store' || item === 'list.json') return;
-    var curPath = path + '/' + item,
-      file = fs.statSync(curPath);
-
-    if (file.isFile()) {
-
-      var data = fs.statSync(curPath);
-      data.name = item;
-      data.path = path + '/';
-      delete data.dev;
-      delete data.mode;
-      delete data.nlink;
-      delete data.uid;
-      delete data.gid;
-      delete data.rdev;
-      delete data.blksize;
-      delete data.ino;
-      delete data.size;
-      delete data.blocks;
-      fileList.push(data);
-
-    } else if (file.isDirectory()) {
-      walk(curPath);
-    }
-
-  });
-}
-
-walk('./articles');
-
-fileList.sort(function (a, b) {
-  return b.birthtime - a.birthtime; });
-
-fs.writeFile('./articles/list.json', JSON.stringify(fileList), function (err) {
+fs.writeFile('./articles/list.json', JSON.stringify(fileList), (err) => {
   if (err) return console.error(err);
   console.log("list.json 数据写入成功！");
 });
+
+function read(curPath, path, item) {
+  let data = fs.statSync(curPath);
+  return {
+    birthtime: data.birthtime,
+    name: item,
+    path: path + '/'
+  };
+}
+
+function walk(path, callback) {
+  let dirList = fs.readdirSync(path);
+  let res = [];
+  dirList.forEach((item) => {
+    if (item === '.DS_Store' || item === 'list.json') return;
+    let curPath = path + '/' + item;
+    let file = fs.statSync(curPath);
+    if (file.isFile()) {
+      res.push(callback(curPath, path, item));
+    } else if (file.isDirectory()) {
+      res = res.concat(walk(curPath, callback));
+    }
+  });
+  return res;
+}
