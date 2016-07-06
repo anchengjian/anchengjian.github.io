@@ -3,7 +3,7 @@ const util = require('util');
 const fileFilter = ['.DS_Store', 'list.json'];
 
 console.time('Sync');
-let fileList = walk('./', fileFilter, read);
+let fileList = walk('./articles', fileFilter, read);
 
 fileList.sort((a, b) => {
   return b.birthtime - a.birthtime;
@@ -17,7 +17,7 @@ fs.writeFile('./articles/list.json', JSON.stringify(fileList), (err) => {
 
 function read(curPath, path, name) {
   let data = fs.statSync(curPath);
-  let content = fs.readFileSync(curPath, 'utf-8').toString().substr(0, 100);
+  let content = fs.readFileSync(curPath, 'utf-8').toString().substr(0, 128) + '...';
   return {
     birthtime: data.birthtime,
     name: name,

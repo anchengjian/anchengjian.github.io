@@ -5,7 +5,7 @@
       <li v-for="post in articles" class="item">
         <a v-link="{path:'/article/'+post.name}">
           <h2>{{post.name}}</h2>
-          <p>{{post.name}}</p>
+          <p>{{post.summary}}</p>
           <span class="dates">{{post.birthtime | date}}</span>
         </a>
       </li>

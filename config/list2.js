@@ -3,9 +3,9 @@ const util = require('util');
 const fileFilter = ['.DS_Store', 'list.json'];
 
 console.time('Promise + Sync');
-let fileList = walk('./', fileFilter).map((file) => {
+let fileList = walk('./articles', fileFilter).map((file) => {
   let data = fs.statSync(file.path);
-  let content = fs.readFileSync(file.path, 'utf-8').toString().substr(0, 100);
+  let content = fs.readFileSync(file.path, 'utf-8').toString().substr(0, 128) + '...';
   return {
     birthtime: data.birthtime,
     name: file.name,
