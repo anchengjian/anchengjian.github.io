@@ -2,29 +2,34 @@ const fs = require('fs');
 const util = require('util');
 const fileFilter = ['.DS_Store', 'list.json'];
 
-console.time('Sync');
-let fileList = walk('./', fileFilter, read);
-
-fileList.sort((a, b) => {
-  return b.birthtime - a.birthtime;
-});
-
-fs.writeFile('./articles/list.json', JSON.stringify(fileList), (err) => {
-  if (err) return console.error(err);
-  console.log("list.json 数据写入成功！");
-  console.timeEnd('Sync');
-});
-
-function read(curPath, path, name) {
-  let data = fs.statSync(curPath);
-  let content = fs.readFileSync(curPath, 'utf-8').toString().substr(0, 100);
+console.time('Promise + Sync');
+let fileList = walk('./', fileFilter).map((file) => {
+  let data = fs.statSync(file.path);
+  let content = fs.readFileSync(file.path, 'utf-8').toString().substr(0, 100);
   return {
     birthtime: data.birthtime,
-    name: name,
-    path: path + '/',
+    name: file.name,
+    path: file.path,
     summary: content
   };
-}
+});
+
+Promise.all(fileList)
+  .then((posts) => {
+    return posts.sort((a, b) => {
+      return b.birthtime - a.birthtime;
+    });
+  })
+  .then((json) => {
+    fs.writeFile('./articles/list.json', JSON.stringify(json), (err) => {
+      if (err) return console.error(err);
+      console.log("list.json 数据写入成功！");
+      console.timeEnd('Promise + Sync');
+    });
+  })
+  .catch((err) => {
+    console.error(err);
+  });
 
 function walk(path, filter, callback) {
   let dirList = fs.readdirSync(path);
