@@ -12,7 +12,7 @@
     width: 150px;
     text-align: center;
     &.page-spinner {
-      margin-top: 48%;
+      margin-top: 100px;
     }
     &.components-spinner{
       margin-top: 150px;
