@@ -37,78 +37,27 @@
     filters: {
       marked: marked
     },
-    methods:{
-      allRight: function(htmlStr){
-        console.log('渲染完成了');
-      }
-    },
     route: {
       data(transition) {
-        let title = transition.to.params.title;
-
-        return new Promise((resolve, reject) =>{
-
-          let postsList = this.$get('postsList');
-
-          let i = 0;
-          if(!postsList){
-            let t = setInterval(()=>{
-
-              postsList = this.$get('postsList');
-
-              // 成功获取了数据
-              if (postsList){
-                clearInterval(t);
-                resolve(postsList);
-              }
-
-              // 超时
-              if(i > 2000){
-                clearInterval(t);
-                reject('列表信息获取错误');
-              }
-
-              i++;
-
-            }, 10);
-          }else{
-            resolve(postsList);
+        let path = transition.to.path;
+        let title = transition.to.params.any.replace(/(.*\/)*([^.]+).*/ig, '$2');
+        if(!path || !title) throw '好歹给个正确的路径啊';
+        return getPosts(path).then((data)=>{
+          // 返回获取好的数据
+          return {
+            posts: {
+              title: title,
+              content: data
+            }
           }
-
-        })
-        .then((postsList) => {
-
-          let info = postsList.filter((ele) => { return (title === ele.name); });
-          if(info.length < 1) return console.error('没找到数据哦');
-          if(info.length > 1) return console.warn('同名文章警告');
-
-          // 同名文章只取第一章
-          return getPosts(title, info[0].path)
-                  .then((data)=>{
-
-                    // 返回获取好的数据
-                    return {
-                      posts: {
-                        title: title,
-                        content: data
-                      }
-                    }
-
-                  });
-        })
-        .catch((ex) => {
-          return console.error('获取文章数据出错：', ex);
         });
-
       }
     }
   };
 
-  function getPosts (title, path) {
-
-    if (!title || !path) return;
-
-    return fetch(path + title)
+  function getPosts (path) {
+    if (!path) return;
+    return fetch(path)
       .then((res)=>{
         return res.text();
       })

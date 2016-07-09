@@ -20,17 +20,21 @@ Vue.filter('date', dateFilter);
 Vue.use(VueRouter);
 let router = new VueRouter({});
 
-router.map({
+let routerMap = {
   '/': {
     component: (resolve) => {
       resolve(postsList);
     }
-  },
-  '/posts/:title': {
-    component: (resolve) => {
-      resolve(posts);
-    }
   }
-});
+};
 
+import config from '../config/blog.config.js';
+let postsPath = ((config.rootPath.substr(-1) === '/' ? config.rootPath : config.rootPath + '/') || '/posts/') + '*any';
+routerMap[postsPath] = {
+  component: (resolve) => {
+    resolve(posts);
+  }
+};
+
+router.map(routerMap);
 router.start(app, 'body');

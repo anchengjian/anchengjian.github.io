@@ -15,7 +15,7 @@ function walk(path, filter, callback) {
   let res = [];
   dirList.forEach((fileName) => {
     if (filter && util.isArray(filter) && filter.indexOf(fileName) >= 0) return;
-    let curPath = path + '/' + fileName;
+    let curPath = path + (path.substr(-1) === '/' ? '' : '/') + fileName;
     let file = fs.statSync(curPath);
     if (file.isFile()) {
       let data = callback && util.isFunction(callback) && callback(curPath, path, fileName);

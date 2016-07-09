@@ -24,8 +24,8 @@ function read(curPath, path, name) {
   let content = fs.readFileSync(curPath, 'utf-8').toString().substr(0, summaryLen) + '...';
   return {
     birthtime: data.birthtime,
-    name: name,
-    path: path + '/',
+    name: name.replace(/(.*\/)*([^.]+).*/ig, '$2'),
+    path: curPath,
     summary: content
   };
 }

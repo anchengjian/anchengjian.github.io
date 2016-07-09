@@ -3,7 +3,7 @@
     <spinner :show="!postsList"></spinner>
     <ul class="posts-list">
       <li v-for="item in postsList" class="card">
-        <a v-link="{path:'/posts/'+item.name}">
+        <a v-link="{path: item.path}">
           <h2>{{item.name}}</h2>
           <p>{{item.summary}}</p>
           <span class="dates">{{item.birthtime | date}}</span>
