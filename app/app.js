@@ -4,22 +4,21 @@ import app from './components/app.vue';
 import header from './components/header.vue';
 import footer from './components/footer.vue';
 import postsList from './components/posts-list.vue';
-import article from './components/article.vue';
+import posts from './components/posts.vue';
 import spinner from './components/spinner.vue';
 
 Vue.component('app', app);
 Vue.component('my-header', header);
 Vue.component('my-footer', footer);
 Vue.component('posts-list', postsList);
-Vue.component('my-article', article);
+Vue.component('my-posts', posts);
 Vue.component('spinner', spinner);
 
 import dateFilter from './filters/date.filter.js';
 Vue.filter('date', dateFilter);
 
-let App = Vue.extend({});
 Vue.use(VueRouter);
-let router = new VueRouter();
+let router = new VueRouter({});
 
 router.map({
   '/': {
@@ -27,11 +26,11 @@ router.map({
       resolve(postsList);
     }
   },
-  '/article/:title': {
+  '/posts/:title': {
     component: (resolve) => {
-      resolve(article);
+      resolve(posts);
     }
   }
 });
 
-router.start(App, 'body');
+router.start(app, 'body');

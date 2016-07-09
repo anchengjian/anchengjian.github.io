@@ -2,6 +2,6 @@
 
 demo站：[http://demo.anchengjian.com/](http://demo.anchengjian.com/)
 
-![](/assets/imgs/6619423937560843073.jpg)
+![](/posts/assets/imgs/6619423937560843073.jpg)
 
 [LOFTER：不爱吃西红柿的鱼](http://anchengjian.lofter.com)&nbsp;&nbsp;&nbsp;[http://anchengjian.lofter.com/post/3217ba_3902b45](http://anchengjian.lofter.com/post/3217ba_3902b45)

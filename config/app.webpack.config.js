@@ -1,19 +1,19 @@
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-var isDev = process.env.NODE_ENV === 'dev';
+const isDev = process.env.NODE_ENV === 'dev';
 
-var config = {
+let config = {
   entry: isDev ? ['webpack/hot/dev-server', './app/app.js'] : ['./app/app.js'],
   resolve: {
     extensions: ['', '.js', '.json', 'scss', 'html'],
     modulesDirectories: ['node_modules'],
-    vendor: ['vue', 'vue-touter']
+    vendor: ['vue', 'vue-router'],
   },
   output: {
-    publicPath: '/build/',
-    path: './build/',
+    publicPath: '/dist/',
+    path: './dist/',
     filename: 'js/bundle.js',
     chunkFilename: 'js/[name].chunk.js'
   },
@@ -75,7 +75,7 @@ var config = {
   plugins: [
     new webpack.optimize.DedupePlugin(),
     new HtmlWebpackPlugin({
-      filename: '../index.html',
+      filename: isDev ? '../../index.html' : '../index.html',
       template: './app/layouts/index.html',
       inject: 'body',
       hash: true,
@@ -88,8 +88,13 @@ var config = {
       Vue: 'vue',
       VueRouter: 'vue-router'
     }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    }),
     new ExtractTextPlugin('css/[name].css'),
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'js/vendor.bundle.js')
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'js/vendor.js')
   ]
 };
 

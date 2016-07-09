@@ -1,8 +1,8 @@
 <template>
   <section class="container">
     <spinner :show="!posts.content"></spinner>
-    <h1 class="post-title">{{posts.title}}</h1>
-    <article class="post" v-html="posts.content | marked"></article>
+    <h1 class="article-title">{{posts.title}}</h1>
+    <article class="article-content" v-html="posts.content | marked"></article>
   </section>
 </template>
 
@@ -33,7 +33,7 @@
         }
       };
     },
-    props: ['articles'],
+    props: ['postsList'],
     filters: {
       marked: marked
     },
@@ -48,18 +48,18 @@
 
         return new Promise((resolve, reject) =>{
 
-          let articles = this.$get('articles');
+          let postsList = this.$get('postsList');
 
           let i = 0;
-          if(!articles){
+          if(!postsList){
             let t = setInterval(()=>{
 
-              articles = this.$get('articles');
+              postsList = this.$get('postsList');
 
               // 成功获取了数据
-              if (articles){
+              if (postsList){
                 clearInterval(t);
-                resolve(articles);
+                resolve(postsList);
               }
 
               // 超时
@@ -72,13 +72,13 @@
 
             }, 10);
           }else{
-            resolve(articles);
+            resolve(postsList);
           }
 
         })
-        .then((articles) => {
+        .then((postsList) => {
 
-          let info = articles.filter((ele) => { return (title === ele.name); });
+          let info = postsList.filter((ele) => { return (title === ele.name); });
           if(info.length < 1) return console.error('没找到数据哦');
           if(info.length > 1) return console.warn('同名文章警告');
 
@@ -163,12 +163,12 @@
       }
     }
   }
-  .post-title{
+  .article-title{
     text-align: center;
     font-size: 26px;
     font-weight: 700;
   }
-  .post {
+  .article-content {
     border-radius: 5px;
     margin: 0 auto 20px;
     padding: 20px 0;
@@ -177,7 +177,7 @@
     word-break: break-word;
   }
   @media (max-width: 768px){
-    .post {
+    .article-content {
       font-size: 1em;
       line-height: 1.6em;
     }

@@ -1,12 +1,12 @@
 <template>
   <section class="container">
-    <spinner :show="!articles"></spinner>
+    <spinner :show="!postsList"></spinner>
     <ul class="posts-list">
-      <li v-for="post in articles" class="item">
-        <a v-link="{path:'/article/'+post.name}">
-          <h2>{{post.name}}</h2>
-          <p>{{post.summary}}</p>
-          <span class="dates">{{post.birthtime | date}}</span>
+      <li v-for="item in postsList" class="card">
+        <a v-link="{path:'/posts/'+item.name}">
+          <h2>{{item.name}}</h2>
+          <p>{{item.summary}}</p>
+          <span class="dates">{{item.birthtime | date}}</span>
         </a>
       </li>
     </ul>
@@ -15,7 +15,7 @@
 
 <script>
   export default {
-    props: ['articles']
+    props: ['postsList']
   };
 </script>
 
@@ -23,7 +23,7 @@
   .posts-list{
     list-style: none;
 
-    .item{
+    .card{
       position: relative;
       padding: 20px 0;
       border-top: 1px solid #eee;

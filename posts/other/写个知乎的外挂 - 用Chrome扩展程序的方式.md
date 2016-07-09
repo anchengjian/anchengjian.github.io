@@ -97,6 +97,6 @@ ps.我是研究技术，不存在恶意的刷帖什么的。大家可以给给�
 
 ps..附一张图，大家想搞歪门邪道请出门左转：
 
-![](/assets/imgs/1050464613101653777.png)
+![](/posts/assets/imgs/1050464613101653777.png)
 
 [LOFTER：不爱吃西红柿的鱼](http://anchengjian.lofter.com)   [http://anchengjian.lofter.com/post/3217ba_2af1846](http://anchengjian.lofter.com/post/3217ba_2af1846)

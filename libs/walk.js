@@ -1,7 +1,7 @@
 const fs = require('fs');
 const util = require('util');
 
-module.exports = walk;
+// walk 方法
 
 function walk(path, filter, callback) {
   let dirList = fs.readdirSync(path);
@@ -19,3 +19,5 @@ function walk(path, filter, callback) {
   });
   return res;
 }
+
+module.exports = walk;

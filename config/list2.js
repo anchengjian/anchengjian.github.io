@@ -1,9 +1,13 @@
 const fs = require('fs');
-const walk = require('./walk.js');
-const fileFilter = ['.DS_Store', 'list.json'];
+const walk = require('../libs/walk.js');
+const fileFilter = ['.DS_Store', 'list.json', 'assets'];
+
+const config = require('./blog.config.js');
+if (!config.rootPath) config.rootPath = './posts';
+if (!config.listPath) config.listPath = './posts/list.json'
 
 console.time('Promise + Sync');
-let fileList = walk('./articles', fileFilter).map((file) => {
+let fileList = walk(config.rootPath, fileFilter).map((file) => {
   let data = fs.statSync(file.path);
   let content = fs.readFileSync(file.path, 'utf-8').toString().substr(0, 128) + '...';
   return {
@@ -21,7 +25,7 @@ Promise.all(fileList)
     });
   })
   .then((json) => {
-    fs.writeFile('./articles/list.json', JSON.stringify(json), (err) => {
+    fs.writeFile(config.listPath, JSON.stringify(json), (err) => {
       if (err) return console.error(err);
       console.log("list.json 数据写入成功！");
       console.timeEnd('Promise + Sync');
