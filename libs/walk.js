@@ -1,7 +1,14 @@
 const fs = require('fs');
 const util = require('util');
 
-// walk 方法
+/**
+ * walk 遍历目录所有文件
+ * @author anchengjian@gmail.com
+ * @param {String} path 开始遍历的目录
+ * @param {Array} filter 遍历过程中忽略的文件、文件夹
+ * @param {Function} callback 自定义遍历过程中针对某一个具体文件的辅助方法
+ * @returns {Array}
+ */
 
 function walk(path, filter, callback) {
   let dirList = fs.readdirSync(path);

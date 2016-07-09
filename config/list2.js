@@ -1,21 +1,37 @@
 const fs = require('fs');
 const walk = require('../libs/walk.js');
-const fileFilter = ['.DS_Store', 'list.json', 'assets'];
-
 const config = require('./blog.config.js');
-if (!config.rootPath) config.rootPath = './posts';
-if (!config.listPath) config.listPath = './posts/list.json'
 
-console.time('Promise + Sync');
-let fileList = walk(config.rootPath, fileFilter).map((file) => {
-  let data = fs.statSync(file.path);
-  let content = fs.readFileSync(file.path, 'utf-8').toString().substr(0, 128) + '...';
-  return {
-    birthtime: data.birthtime,
-    name: file.name,
-    path: file.path,
-    summary: content
-  };
+let rootPath = config.rootPath || './posts';
+let listPath = config.listPath || './posts/list.json';
+
+const fileFilter = ['.DS_Store', 'list.json', 'assets'];
+const summaryLen = 128;
+
+console.time('Promise + Async');
+let fileList = walk(rootPath, fileFilter).map((file) => {
+  let summaryFn = new Promise(function (resolve, reject) {
+    fs.readFile(file.path, 'utf-8', (err, content) => {
+      if (err) return reject(error);
+      resolve(content);
+    });
+  });
+  let statFn = new Promise(function (resolve, reject) {
+    fs.stat(file.path, (err, stats) => {
+      if (err) return reject(error);
+      resolve(stats);
+    });
+  });
+  return Promise
+    .all([summaryFn, statFn])
+    .then((arr) => {
+      return {
+        birthtime: arr[1].birthtime,
+        name: file.name,
+        path: file.path,
+        summary: arr[0].substr(0, summaryLen) + '...'
+      };
+    });
 });
 
 Promise.all(fileList)
@@ -25,10 +41,10 @@ Promise.all(fileList)
     });
   })
   .then((json) => {
-    fs.writeFile(config.listPath, JSON.stringify(json), (err) => {
+    fs.writeFile(listPath, JSON.stringify(json), (err) => {
       if (err) return console.error(err);
       console.log("list.json 数据写入成功！");
-      console.timeEnd('Promise + Sync');
+      console.timeEnd('Promise + Async');
     });
   })
   .catch((err) => {
