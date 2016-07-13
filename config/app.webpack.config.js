@@ -5,11 +5,13 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const isDev = process.env.NODE_ENV === 'dev';
 
 let config = {
-  entry: isDev ? ['webpack/hot/dev-server', './app/app.js'] : ['./app/app.js'],
+  entry: {
+    app: isDev ? ['webpack/hot/dev-server', './app/app.js'] : ['./app/app.js'],
+    vendor: ['vue', 'vue-router']
+  },
   resolve: {
     extensions: ['', '.js', '.json', 'scss', 'html'],
-    modulesDirectories: ['node_modules'],
-    vendor: ['vue', 'vue-router'],
+    modulesDirectories: ['node_modules']
   },
   output: {
     publicPath: '/dist/',
