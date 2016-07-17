@@ -15,11 +15,11 @@ body {
   background: #fff;
 }
 
-html, body, ul, ol, h1, h2, h3, h4, h5, h6, p {
+// , ul, ol, h1, h2, h3, h4, h5, h6, p
+html, body{
   padding: 0;
   margin: 0;
 }
-
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
   display: block;
 }
@@ -58,6 +58,13 @@ a {
   &:hover {
     color: #5694f1;
   }
+}
+
+blockquote {
+  background-color: rgba(214,237,255,.3);
+  padding: 10px;
+  margin: 0;
+  border-left: 4px solid rgba(214,237,255,1);
 }
 
 @media screen and (max-width: 960px) {

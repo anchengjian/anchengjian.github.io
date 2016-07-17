@@ -79,6 +79,7 @@
       padding: 60px 20px 20px;
       border-radius: 8px 8px 5px 5px;
       font-family: Monaco,Menlo,Consolas,Courier New,monospace;
+      line-height: 1.4;
       background-color: rgb(39,40,34);
       color: #ccc;
       overflow-x: auto;
@@ -124,6 +125,11 @@
     background-color: #fff;
     width: auto;
     word-break: break-word;
+
+    img {
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, .1);
+      max-width: 100%;
+    }
   }
   @media (max-width: 768px){
     .article-content {
