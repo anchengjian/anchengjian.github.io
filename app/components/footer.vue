@@ -3,7 +3,7 @@
     <section class="container">
       <p class="copyright">© Copyright 2016 {{user.name}}</p>
     </section>
-  </header>
+  </footer>
 </template>
 
 <script>
