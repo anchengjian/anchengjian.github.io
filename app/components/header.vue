@@ -6,8 +6,9 @@
       <h3 class="title">{{user.title}}</h3>
 
       <nav class="main-nav">
-        <a v-link="{ path: '/' }" class="btn btn-link">首页</a>
-        <!-- <a v-link="{ path: '/about' }" class="btn btn-link">关于</a> -->
+        <a v-link="{ path: '/' }" class="btn-link">首页</a>
+        <a href="https://github.com/anchengjian/anchengjian.github.io" class="btn-link">view source</a>
+        <!-- <a v-link="{ path: '/about' }" class="btn-link">关于</a> -->
       </nav>
     </section>
   </header>
@@ -53,6 +54,16 @@
       position: absolute;
       top: 10px;
       right: 50px;
+    }
+    .btn-link {
+      margin: 0 5px;
+      padding: 4px 8px;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      transition: all ease .2s;
+      &:hover {
+        border-color: #5694f1;
+      }
     }
   }
 </style>

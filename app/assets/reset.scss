@@ -1,0 +1,47 @@
+*, :after, :before {
+  box-sizing: border-box;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  color: $text-color;
+  direction: ltr;
+  overflow-x: hidden;
+  height: 100%;
+  font: 300 14px/1.8 $fontFamily;
+  color: #444;
+  background: #fff;
+}
+
+// , ul, ol, h1, h2, h3, h4, h5, h6, p
+html, body {
+  padding: 0;
+  margin: 0;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block;
+}
+
+::selection {
+  color: #222;
+  background: #d6edff;
+  text-shadow: none;
+}
+
+a {
+  text-decoration: none;
+  transition: color ease .3s;
+  color: $blue;
+  ;
+  &:hover {
+    color: $blue-deep;
+  }
+}
+
+blockquote {
+  background-color: rgba(214, 237, 255, .3);
+  padding: 10px;
+  margin: 0;
+  border-left: 4px solid rgba(214, 237, 255, 1);
+}
