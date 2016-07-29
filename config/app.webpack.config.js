@@ -7,7 +7,7 @@ const isDev = process.env.NODE_ENV === 'dev';
 let config = {
   entry: {
     app: isDev ? ['webpack/hot/dev-server', './app/app.js'] : ['./app/app.js'],
-    vendor: ['vue', 'vue-router']
+    vendor: ['vue', 'vue-router', 'whatwg-fetch']
   },
   resolve: {
     extensions: ['', '.js', '.json', 'scss', 'html'],
@@ -16,7 +16,7 @@ let config = {
   output: {
     publicPath: '/dist/',
     path: './dist/',
-    filename: 'js/bundle.js',
+    filename: 'js/[name].js',
     chunkFilename: 'js/[name].chunk.js'
   },
   module: {
@@ -77,8 +77,8 @@ let config = {
   plugins: [
     new webpack.optimize.DedupePlugin(),
     new HtmlWebpackPlugin({
-      filename: isDev ? '../../index.html' : '../index.html',
-      template: './app/layouts/index.html',
+      filename: '../index.html',
+      template: 'html-withimg-loader?exclude=/dist/!./app/layouts/index.html',
       inject: 'body',
       hash: true,
       minify: {
@@ -88,15 +88,15 @@ let config = {
     }),
     new webpack.ProvidePlugin({
       Vue: 'vue',
-      VueRouter: 'vue-router'
+      VueRouter: 'vue-router',
+      fetch: 'whatwg-fetch'
     }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
       }
     }),
-    new ExtractTextPlugin('css/[name].css'),
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'js/vendor.js')
+    new ExtractTextPlugin('css/[name].css')
   ]
 };
 

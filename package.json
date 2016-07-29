@@ -13,9 +13,11 @@
   "license": "ISC",
   "dependencies": {
     "highlight.js": "^9.5.0",
+    "html-withimg-loader": "^0.1.15",
     "marked": "^0.3.5",
     "vue": "^1.0.25",
-    "vue-router": "^0.7.13"
+    "vue-router": "^0.7.13",
+    "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {
     "autoprefixer-loader": "^3.2.0",

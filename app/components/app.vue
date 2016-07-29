@@ -13,7 +13,7 @@
 
   // TODO：兼容性等问题，不做考虑
   // https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API/Using_Fetch
-  fetch(config.listPath || './posts/list.json')
+  window.fetch(config.listPath || './posts/list.json')
     .then((res)=>{
       return res.json();
     })

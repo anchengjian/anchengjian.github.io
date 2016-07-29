@@ -57,7 +57,7 @@
 
   function getPosts (path) {
     if (!path) return;
-    return fetch(path)
+    return window.fetch(path)
       .then((res)=>{
         return res.text();
       })

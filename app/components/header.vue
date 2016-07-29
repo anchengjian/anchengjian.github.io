@@ -7,7 +7,8 @@
 
       <nav class="main-nav">
         <a v-link="{ path: '/' }" class="btn-link">首页</a>
-        <a href="https://github.com/anchengjian/anchengjian.github.io" class="btn-link">view source</a>
+        <a href="/animation-demos/" class="btn-link">动效实验</a>
+        <a href="https://github.com/anchengjian/anchengjian.github.io" class="btn-link">View on GitHub</a>
         <!-- <a v-link="{ path: '/about' }" class="btn-link">关于</a> -->
       </nav>
     </section>
@@ -56,13 +57,23 @@
       right: 50px;
     }
     .btn-link {
-      margin: 0 5px;
+      margin: 0;
       padding: 4px 8px;
       border: 1px solid transparent;
       border-radius: 4px;
       transition: all ease .2s;
       &:hover {
         border-color: #5694f1;
+      }
+    }
+  }
+  @media screen and (max-width: 750px) {
+    .header-warp {
+      .main-nav {
+        position: inherit;
+        top: inherit;
+        right: inherit;
+        margin-top: 10px;
       }
     }
   }
