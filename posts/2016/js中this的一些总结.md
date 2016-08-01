@@ -172,7 +172,31 @@ shiba.eat(); // "bones"
 其中 shiba 对象，如图：
 ![shiba狗](/posts/assets/imgs/this-in-js-2.png)
 
-### 6、DOM事件处理函数中的 this
+### 6、ES6 中的箭头函数（Arrow Functions）中的 this
+>箭头函数就是个简写形式的函数表达式，并且它拥有词法作用域的this值（即不会新产生自己作用域下的this, arguments, super 和 new.target 等对象）。此外，箭头函数总是匿名的。
+>箭头函数不仅仅是让代码变得简洁，函数中 this 总是绑定总是指向对象自身。
+
+```javascript
+// 一个空箭头函数,返回 undefined
+let empty = () => {};
+
+(() => "foobar")() // 返回 "foobar" 
+
+var simple = a => a > 15 ? 15 : a; 
+simple(16); // 15
+simple(10); // 10
+
+let max = (a, b) => a > b ? a : b;
+
+// Easy array filtering, mapping, ...
+
+var arr = [5, 6, 13, 0, 1, 18, 23];
+var sum = arr.reduce((a, b) => a + b);  // 66
+var even = arr.filter(v => v % 2 == 0); // [6, 0, 18]
+var double = arr.map(v => v * 2);       // [10, 12, 26, 0, 2, 36, 46]
+```
+
+### 7、DOM事件处理函数中的 this
 当函数被用作事件处理函数时，它的 this 指向触发事件的元素（一些浏览器在动态添加监听器时不遵守这个约定，除非使用 addEventListener ）。
 ```javascript
 // 被调用时，将关联的元素变成蓝色
@@ -193,7 +217,7 @@ for(var i=0 ; i<elements.length ; i++){
 }
 ```
 
-### 7、内联事件处理函数中的 this
+### 8、内联事件处理函数中的 this
 当代码被内联处理函数调用时，它的this指向监听器所在的DOM元素
 ```html
 <button onclick="console.log(this)">
