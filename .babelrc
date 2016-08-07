@@ -1,0 +1,10 @@
+{
+  "presets": ["es2015", "stage-2"],
+  "plugins": ["transform-runtime"],
+  "comments": false,
+  "ignore":[
+    "vue.common.js",
+    "vue-router.js",
+    "fetch.js"
+  ]
+}

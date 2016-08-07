@@ -82,6 +82,11 @@ let config = {
         collapseWhitespace: !isDev
       }
     }),
+    new webpack.ProvidePlugin({
+      Vue: 'vue',
+      VueRouter: 'vue-router',
+      fetch: 'whatwg-fetch'
+    }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
