@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
-    vendor: ['vue', 'vue-router', 'whatwg-fetch']
+    vendor: ['vue', 'vue-router', 'whatwg-fetch', 'marked', 'highlight.js']
   },
   output: {
     publicPath: '/dist/',
