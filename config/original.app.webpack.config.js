@@ -6,7 +6,8 @@ const isDev = process.env.NODE_ENV === 'dev';
 
 let config = {
   entry: {
-    app: isDev ? ['webpack/hot/dev-server', './app/app.js'] : ['./app/app.js']
+    app: isDev ? ['webpack/hot/dev-server', './app/app.js'] : ['./app/app.js'],
+    vendor: ['vue', 'vue-router', 'whatwg-fetch']
   },
   resolve: {
     extensions: ['', '.js', '.json', 'scss', 'html'],
@@ -64,9 +65,12 @@ let config = {
   },
   vue: {
     loaders: {
+      // load all <script> without "lang" attribute with coffee-loader
       js: 'babel?presets[]=es2015',
       css: ExtractTextPlugin.extract('style-loader', 'css-loader!autoprefixer?{browsers:["last 2 version"]}'),
       sass: ExtractTextPlugin.extract('style-loader', 'css-loader!autoprefixer?{browsers:["last 2 version"]}!sass-loader'),
+      // load <template> directly as HTML string, without piping it
+      // through vue-html-loader first
       html: 'raw'
     }
   },
@@ -81,6 +85,11 @@ let config = {
         removeComments: !isDev,
         collapseWhitespace: !isDev
       }
+    }),
+    new webpack.ProvidePlugin({
+      Vue: 'vue',
+      VueRouter: 'vue-router',
+      fetch: 'whatwg-fetch'
     }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {

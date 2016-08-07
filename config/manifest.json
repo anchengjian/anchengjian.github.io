@@ -1,0 +1,9 @@
+{
+  "name": "vendor",
+  "content": {
+    "../../node_modules/vue-router/dist/vue-router.js": 1,
+    "../../node_modules/vue/dist/vue.common.js": 2,
+    "../../node_modules/whatwg-fetch/fetch.js": 3,
+    "../../../../../../usr/local/lib/node_modules/webpack/node_modules/process/browser.js": 4
+  }
+}
