@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-
+const manifest = require('./manifest.json');
 const isDev = process.env.NODE_ENV === 'dev';
 
 let config = {
@@ -72,6 +72,10 @@ let config = {
   },
   plugins: [
     new webpack.optimize.DedupePlugin(),
+    new webpack.DllReferencePlugin({
+      context: __dirname,
+      manifest: manifest
+    }),
     new HtmlWebpackPlugin({
       filename: '../index.html',
       template: 'html-withimg-loader?exclude=/dist/!./app/layouts/index.html',

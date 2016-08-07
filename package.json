@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "export NODE_ENV=dev && webpack-dev-server --hot --devtool --config ./config/app.webpack.config.js --content-base ./ --host 0.0.0.0 --inline",
     "deploy": "export NODE_ENV=deploy && webpack -p --config ./config/app.webpack.config.js",
+    "vendor": "webpack -p --config ./config/dll.webpack.config.js",
     "list": "node ./config/list.js",
     "test": "node test"
   },
