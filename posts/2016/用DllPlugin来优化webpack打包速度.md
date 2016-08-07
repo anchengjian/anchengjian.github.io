@@ -117,3 +117,7 @@ module.exports = config;
 ```
 
 就这么多了，有兴趣的请看我这个blog的config部分的配置源码。点击顶部的 `view on github` 可到。
+
+参考资料：
+1. [彻底解决Webpack打包慢的问题](https://segmentfault.com/a/1190000006087638#articleHeader4)
+2. [开发工具心得：如何 10 倍提高你的 Webpack 构建效率](https://segmentfault.com/a/1190000005770042#articleHeader11)
