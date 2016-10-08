@@ -23,7 +23,7 @@ function read(curPath, path, name) {
   let data = fs.statSync(curPath);
   let content = fs.readFileSync(curPath, 'utf-8').toString().substr(0, summaryLen) + '...';
   return {
-    birthtime: data.birthtime,
+    birthtime: data.mtime,
     name: name.replace(/(.*\/)*([^.]+).*/ig, '$2'),
     path: curPath,
     summary: content
