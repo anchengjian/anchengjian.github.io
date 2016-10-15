@@ -1,5 +1,8 @@
 import assets from './assets/index.js';
 
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+
 import app from './components/app.vue';
 import header from './components/header.vue';
 import footer from './components/footer.vue';
