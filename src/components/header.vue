@@ -3,7 +3,7 @@
     <section class="container header-content">
       <img :src="user.headurl" class="avatar" alt="{{user.name}}">
       <h2 class="name">{{user.name}}</h2>
-      <h3 class="title">{{user.title}}</h3>
+      <h3 class="title">{{user.job}}</h3>
 
       <nav class="main-nav">
         <a v-link="{ path: '/' }" class="btn-link">首页</a>

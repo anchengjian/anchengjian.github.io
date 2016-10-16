@@ -6,7 +6,7 @@ const fs = require('fs');
 const indexPath = path.resolve(__dirname, '../src/layouts/index.html');
 // 在自动生成libs的引用前先干掉旧的引用
 // 同步是为了确保webpack在执行前得到的经过调整的文件
-let indexFile = fs.readFileSync(indexPath, 'utf-8').toString().replace(/\<script\ type\=\"text\/javascript\"\ src\=\"\.\/js\/libs\.js.*?\>\<\/script\>/, '');
+let indexFile = fs.readFileSync(indexPath, 'utf-8').toString().replace(/<script type="text\/javascript" src=".*?\/libs\.js.*?\><\/script>/g, '');
 fs.writeFile(indexPath, indexFile, 'utf-8');
 
 module.exports = {
