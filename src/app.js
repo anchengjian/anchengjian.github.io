@@ -30,6 +30,11 @@ let routerMap = {
     component: (resolve) => {
       resolve(postsList);
     }
+  },
+  '*any': {
+    component: (resolve) => {
+      resolve(notFound);
+    }
   }
 };
 
