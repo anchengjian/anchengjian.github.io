@@ -44,8 +44,11 @@
     route: {
       data(transition) {
         let path = transition.to.path;
-        let title = transition.to.params.any.replace(/(.*\/)*([^.]+).*/ig, '$2');
-        if(!path || !title) throw '好歹给个正确的路径啊';
+        let pathName = transition.to.params.any;
+        let startPos = pathName.lastIndexOf('/') + 1;
+        let endPos = pathName.lastIndexOf('.') < 1 ? pathName.length : pathName.lastIndexOf('.');
+        let fileName = pathName.substring(startPos, endPos);
+        if(!path.length) throw Error('路径不能为空');
         return fetch(path)
           .then((res) => {
             if (!res.ok || !res.statusText === 'OK') return '';
@@ -55,7 +58,7 @@
             // 返回获取好的数据
             return {
               posts: {
-                title: title,
+                title: fileName,
                 content: text
               },
               failedToLoad: !text.length
