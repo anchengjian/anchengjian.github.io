@@ -40,12 +40,12 @@ fs.writeFile(listPath, JSON.stringify(fileList), (err) => {
  * @param    {[type]}                 name    [description]
  * @return   {[type]}                         [description]
  */
-function formatFile(curPath, path, name) {
+function formatFile(curPath, path, fileName) {
   let data = fs.statSync(curPath);
   let content = fs.readFileSync(curPath, 'utf-8').toString().substr(0, summaryLen) + '...';
   return {
     birthtime: data.mtime,
-    name: name.replace(/(.*\/)*([^.]+).*/ig, '$2'),
+    name: path.parse(fileName).name,
     path: curPath,
     summary: content
   };
