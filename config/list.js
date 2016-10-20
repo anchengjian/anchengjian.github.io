@@ -40,7 +40,7 @@ fs.writeFile(listPath, JSON.stringify(fileList), (err) => {
  * @param    {[type]}                 name    [description]
  * @return   {[type]}                         [description]
  */
-function formatFile(curPath, path, fileName) {
+function formatFile(curPath, filePath, fileName) {
   let data = fs.statSync(curPath);
   let content = fs.readFileSync(curPath, 'utf-8').toString().substr(0, summaryLen) + '...';
   return {
@@ -54,21 +54,21 @@ function formatFile(curPath, path, fileName) {
 /**
  * walk 遍历目录所有文件
  * @author anchengjian@gmail.com
- * @param {String} path 开始遍历的目录
+ * @param {String} filePath 开始遍历的目录
  * @param {Array} filter 遍历过程中忽略的文件、文件夹
  * @param {Function} callback 自定义遍历过程中针对某一个具体文件的辅助方法
  * @returns {Array}
  */
 
-function walk(path, filter, callback) {
-  let dirList = fs.readdirSync(path);
+function walk(filePath, filter, callback) {
+  let dirList = fs.readdirSync(filePath);
   let res = [];
   dirList.forEach((fileName) => {
     if (filter && util.isArray(filter) && filter.indexOf(fileName) >= 0) return;
-    let curPath = path + (path.substr(-1) === '/' ? '' : '/') + fileName;
+    let curPath = filePath + (filePath.substr(-1) === '/' ? '' : '/') + fileName;
     let file = fs.statSync(curPath);
     if (file.isFile()) {
-      let data = callback && util.isFunction(callback) && callback(curPath, path, fileName);
+      let data = callback && util.isFunction(callback) && callback(curPath, filePath, fileName);
       res.push(data || { path: curPath, name: fileName });
     } else if (file.isDirectory()) {
       res = res.concat(walk(curPath, filter, callback));
