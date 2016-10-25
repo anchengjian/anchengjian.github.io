@@ -45,3 +45,12 @@ blockquote {
   margin: 0;
   border-left: 4px solid rgba(214, 237, 255, 1);
 }
+
+code {
+  background-color: #e3efed;
+  padding: 5px;
+  margin: 0 5px;
+  border-radius: 4px;
+  font-family: $fontFamily;
+  color: #000;
+}

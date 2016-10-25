@@ -75,6 +75,7 @@
     position: relative;
     code{
       display: block;
+      margin: 0;
       padding: 60px 20px 20px;
       border-radius: 8px 8px 5px 5px;
       font-family: Monaco,Menlo,Consolas,Courier New,monospace;
@@ -126,8 +127,13 @@
     word-break: break-word;
 
     img {
+      margin: 10px;
       box-shadow: 0px 4px 15px rgba(0, 0, 0, .1);
       max-width: 100%;
+      transition: box-shadow .3s ease;
+      &:hover {
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, .2);
+      }
     }
   }
   @media (max-width: 768px){
