@@ -42,13 +42,16 @@ fs.writeFile(listPath, JSON.stringify(fileList), (err) => {
  */
 function formatFile(curPath, filePath, fileName) {
   let data = fs.statSync(curPath);
-  let content = fs.readFileSync(curPath, 'utf-8').toString().substr(0, summaryLen) + '...';
-  return {
-    birthtime: data.mtime,
-    name: path.parse(fileName).name,
-    path: curPath,
-    summary: content
-  };
+  let article = fs.readFileSync(curPath, 'utf-8').toString();
+  let name = path.parse(fileName).name;
+  let startPos = 0;
+  let matchTitle = article.match(/\#(.+)/);
+  if (matchTitle && matchTitle.length > 1) {
+    name = matchTitle[1].trim();
+    startPos = matchTitle[0].length;
+  }
+  let summary = article.substr(startPos, summaryLen) + '...';
+  return { birthtime: data.mtime, name, path: curPath, summary };
 }
 
 /**
