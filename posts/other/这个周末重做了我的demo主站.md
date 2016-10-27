@@ -1,3 +1,5 @@
+# 这个周末重做了我的demo主站
+
 demo主站在本博客的主导航中点击"demo"按钮也可进，附地址：[http://demo.anchengjian.com/](http://demo.anchengjian.com/)
 
 昨天早上爬起来后晕乎乎的考了信息检索的期末，真是个另人愉快的体验，在第六周就期末了。哈哈。
