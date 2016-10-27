@@ -1,7 +1,6 @@
 <template>
   <section class="container">
     <spinner :hide="!posts.content.length || !failedToLoad"></spinner>
-    <h1 class="article-title">{{posts.title}}</h1>
     <article class="article-content" v-html="posts.content | marked"></article>
     <not-found v-if="failedToLoad">
       <p>没找到相关文章。</p>
@@ -31,7 +30,7 @@
     data() {
       return {
         posts: {
-          title: '',
+          // title: '',
           content: ''
         },
          failedToLoad: false
@@ -44,10 +43,6 @@
     route: {
       data(transition) {
         let path = transition.to.path;
-        let pathName = transition.to.params.any;
-        let startPos = pathName.lastIndexOf('/') + 1;
-        let endPos = pathName.lastIndexOf('.') < 1 ? pathName.length : pathName.lastIndexOf('.');
-        let fileName = pathName.substring(startPos, endPos);
         if(!path.length) throw Error('路径不能为空');
         return fetch(path)
           .then((res) => {
@@ -58,7 +53,6 @@
             // 返回获取好的数据
             return {
               posts: {
-                title: fileName,
                 content: text
               },
               failedToLoad: !text.length
@@ -113,7 +107,7 @@
       }
     }
   }
-  .article-title{
+  .article-title, h1{
     text-align: center;
     font-size: 26px;
     font-weight: 700;
