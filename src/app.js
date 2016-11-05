@@ -48,3 +48,7 @@ routerMap[postsPath] = {
 
 router.map(routerMap);
 router.start(app, 'body');
+
+// 一颗赛艇
+import interestingTitle from './utils/interesting-title';
+interestingTitle();
