@@ -1,5 +1,6 @@
-export default function interestingTitle() {
-  let titles = document.title;
+export default function interestingTitle(title) {
+  let originTitle = document.title;
+  let interesting = title || '※18♥禁★电影【在线观看】☆...';
   let hidden, visibilityChange;
   ['', 'o', 'ms', 'moz', 'webkit'].forEach(prefix => {
     let supportHidden = prefix + (prefix ? 'Hidden' : 'hidden');
@@ -10,7 +11,19 @@ export default function interestingTitle() {
 
   if (typeof document.addEventListener === 'undefined' || typeof document[hidden] === 'undefined') return;
 
-  document.addEventListener(visibilityChange, function() {
-    document.title = document[hidden] ? '※18♥禁★电影【在线观看】☆' : titles;
-  }, false);
+  document.addEventListener(visibilityChange, horseRaceLamp, false);
+
+  let timer;
+  function horseRaceLamp() {
+    if (document[hidden]) {
+      document.title = interesting;
+      timer = setInterval(() => {
+        let title = document.title;
+        document.title = title.substr(1, title.length - 1) + title[0];
+      }, 50);
+    } else {
+      document.title = originTitle;
+      clearInterval(timer);
+    }
+  }
 }
