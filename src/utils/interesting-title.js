@@ -1,12 +1,15 @@
-export default function (interestingTitle, interestingFavicon) {
+export default function({ title, favicon, noRunTitle, noRunFavicon } = { noRunTitle: false, noRunFavicon: false }) {
   // origin info
   let originTitle = document.title;
-  let originFavicon = getFaviconEle();
-  let originFaviconHref = originFavicon.href;
+  let originFavicon, originFaviconHref;
+  if (!noRunFavicon) {
+    originFavicon = getFaviconEle();
+    originFaviconHref = originFavicon.href;
+  }
 
   // interesting info
-  interestingTitle = interestingTitle || '※18♥禁★电影【在线观看】☆...';
-  interestingFavicon = interestingFavicon || 'http://cl.hotcool.info/favicon.ico';
+  title = title || '※18♥禁★电影【在线观看】☆...';
+  favicon = favicon || 'http://cl.hotcool.info/favicon.ico';
 
   // get prefix support for ...
   let hidden, visibilityChange;
@@ -24,18 +27,19 @@ export default function (interestingTitle, interestingFavicon) {
   document.addEventListener(visibilityChange, horseRaceLamp, false);
 
   let timer;
+
   function horseRaceLamp() {
     if (document[hidden]) {
-      document.title = interestingTitle;
-      originFavicon.href = interestingFavicon;
-      timer = setInterval(() => {
-        let title = document.title;
-        document.title = title.substr(1, title.length - 1) + title[0];
+      document.title = title;
+      if (originFavicon) originFavicon.href = favicon;
+      if (!noRunTitle) timer = setInterval(() => {
+        let str = document.title;
+        document.title = str.substr(1, str.length - 1) + str[0];
       }, 50);
     } else {
       document.title = originTitle;
-      originFavicon.href = originFaviconHref;
-      clearInterval(timer);
+      if (originFavicon) originFavicon.href = originFaviconHref;
+      if (timer || timer === 0) clearInterval(timer);
     }
   }
 }
