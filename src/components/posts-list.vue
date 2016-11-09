@@ -22,6 +22,9 @@
 <style lang="sass">
   .posts-list{
     list-style: none;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
 
     .card{
       position: relative;
@@ -56,6 +59,7 @@
         font-weight: 400;
         line-height: 1.5;
         color: #aaa;
+        word-wrap: break-word;
       }
     }
 
