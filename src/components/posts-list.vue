@@ -59,7 +59,7 @@
         font-weight: 400;
         line-height: 1.5;
         color: #aaa;
-        word-wrap: break-word;
+        word-break: break-all;
       }
     }
 
