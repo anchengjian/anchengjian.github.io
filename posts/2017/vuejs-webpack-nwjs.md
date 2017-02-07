@@ -16,7 +16,7 @@
 ## 二、vue&webpack 项目搭建
 首先用 [vue-cli](https://github.com/vuejs/vue-cli) 快速的搭建一个 [webpack](https://github.com/vuejs-templates/webpack) 模板项目，省心又省事儿。
 这部分不做过多介绍，很容易的。
-方便新人理解和学习，给个参考链接...
+方便新人理解和学习，给个参考链接 https://github.com/vuejs-templates/webpack
 
 ## 三、NW.js 的建构
 整个 nw 建构是基于 vue&webpack 这个前置步骤的项目的。   
@@ -229,4 +229,7 @@ module.exports = {
 }
 ```
 
-至此，一个完整的开发建构就出来，后面慢慢更新产品模式的打包建构。原文持续更新
+至此，一个完整的开发建构就出来，后面慢慢更新产品模式的打包建构。   
+
+原文持续更新: [http://blog.anchengjian.com/#/posts/2017/vuejs-webpack-nwjs.md](http://blog.anchengjian.com/#/posts/2017/vuejs-webpack-nwjs.md)
+
