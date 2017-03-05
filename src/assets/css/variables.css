@@ -1,0 +1,28 @@
+:root {
+  --font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  --primary: #5badf0;
+  --primary-deep: #5694f1;
+  --success: #5cb85c;
+  --success-deep: #449d44;
+  --info: #5bc0de;
+  --info-deep: #31b0d5;
+  --warning: #f0ad4e;
+  --warning-deep: #ec971f;
+  --danger: #d9534f;
+  --danger-deep: #c9302c;
+  /*text size*/
+  --t-s: 12px;
+  --t-m: 14px;
+  --t-l: 16px;
+  --t-xl: 18px;
+  --t-xxl: 20px;
+  --t-xxxl: 30px;
+  /*color*/
+  --white: #fff;
+  --gray-base: #808080;
+  --gray-dark: #a6a6a6;
+  --gray: #d9d9d9;
+  --gray-light: #eee;
+  --gray-lighter: #f7f7f7;
+  --blank: #444;
+}

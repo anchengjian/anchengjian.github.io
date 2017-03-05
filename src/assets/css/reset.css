@@ -1,0 +1,56 @@
+*, *:after, *:before {
+  box-sizing: border-box;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--blank);
+  direction: ltr;
+  font: 300 14px/1.8 var(--font-family);
+}
+
+html, body, ul, ol, h1, h2, h3, h4, h5, h6, p {
+  padding: 0;
+  margin: 0;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  transition: color ease .3s;
+  color: var(--primary);
+  cursor: pointer;
+  &:hover {
+    color: var(--primary-deep);
+  }
+}
+
+blockquote {
+  background-color: rgba(214, 237, 255, .3);
+  padding: 10px;
+  margin: 0;
+  border-left: 4px solid rgba(214, 237, 255, 1);
+}
+
+code {
+  background-color: #e3efed;
+  padding: 5px;
+  margin: 0 5px;
+  border-radius: 4px;
+  font-family: var(--font-family);
+  color: #000;
+}
+
+hr {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+::selection {
+  color: #222;
+  background: #d6edff;
+  text-shadow: none;
+}
