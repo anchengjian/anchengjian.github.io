@@ -6,9 +6,10 @@ var baseWebpackConfig = require('./webpack.base.conf')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
+// https://github.com/ampedandwired/html-webpack-plugin
 var htmlOptions = Object.assign({}, require('../config/app').appInfo, {
   filename: 'index.html',
-  template: 'index.html',
+  template: 'src/index.html',
   inject: 'body'
 })
 
@@ -30,7 +31,6 @@ module.exports = merge(baseWebpackConfig, {
     // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-    // https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin(htmlOptions),
     new FriendlyErrorsPlugin()
   ]

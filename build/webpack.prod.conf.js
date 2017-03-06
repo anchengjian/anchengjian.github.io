@@ -10,9 +10,13 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 
 var env = config.build.env
+
+// generate dist index.html with correct asset hash for caching.
+// you can customize output by editing /index.html
+// see https://github.com/ampedandwired/html-webpack-plugin
 var htmlOptions = Object.assign({}, require('../config/app').appInfo, {
   filename: config.build.index,
-  template: 'index.html',
+  template: 'src/index.html',
   inject: true,
   minify: {
     removeComments: true,
@@ -56,9 +60,6 @@ var webpackConfig = merge(baseWebpackConfig, {
     // Compress extracted CSS. We are using this plugin so that possible
     // duplicated CSS from different components can be deduped.
     new OptimizeCSSPlugin(),
-    // generate dist index.html with correct asset hash for caching.
-    // you can customize output by editing /index.html
-    // see https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin(htmlOptions),
     // split vendor js into its own file
     new webpack.optimize.CommonsChunkPlugin({
