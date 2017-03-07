@@ -16,6 +16,9 @@ npm run build
 
 # build for production and view the bundle analyzer report
 npm run build --report
+
+# build for posts and get list.json
+npm run blog
 ```
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+简单的记录一点自己的见闻，如果喜欢的话请点个 star ，蛤蛤，谢谢。
