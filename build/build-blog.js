@@ -10,23 +10,16 @@ const startPath = path.resolve(rootPath, config.rootPath || './posts')
 const listPath = path.resolve(rootPath, config.listPath || './posts/list.json')
 
 // ignore files
-const fileFilter = ['.DS_Store', 'list.json', 'assets']
+const filterReg = /(^\.)|(list\.json$)/
 
 // summary content
 const summaryLen = 128
 
-/**
- * walk 遍历目录所有文件
- * @author anchengjian@gmail.com
- * @param {String} filePath 开始遍历的目录
- * @param {Array} filters 遍历过程中忽略的文件、文件夹
- * @returns {Events}
- */
+// walk 遍历目录所有文件
 class Walk extends EventEmitter {
-  constructor(filePath = __dirname, filters) {
+  constructor(filePath = __dirname, filterReg) {
     super()
-
-    this._filters = filters || []
+    this._filterReg = filterReg
     this.stepHandle(filePath)
   }
   stepHandle(filePath) {
@@ -37,7 +30,7 @@ class Walk extends EventEmitter {
       if (!files || !util.isArray(files) || files.length === 0) return
 
       files.forEach(fileName => {
-        if (this._filters.indexOf(fileName) >= 0) return
+        if (this._filterReg.test(fileName)) return
 
         const curPath = path.resolve(filePath, fileName)
         fs.stat(curPath, (err, stats) => {
@@ -58,8 +51,9 @@ try {
   require(listPath).forEach(item => originMap[item.path] = item)
 } catch (e) {}
 
+console.time('async')
 const postsList = []
-const countFiles = new Walk(startPath, fileFilter)
+const countFiles = new Walk(startPath, filterReg)
 
 countFiles.on('data', (curPath, stats) => {
   fs.readFile(curPath, 'utf-8', (err, article) => {
@@ -81,20 +75,20 @@ countFiles.on('data', (curPath, stats) => {
       res.name = path.parse(res.path).name
     }
 
-    res.summary = article.substr(startPos, summaryLen) + '...'
+    res.summary = article.substr(startPos, summaryLen)
 
     postsList.push(res)
   })
 })
 
-// countFiles.on('end', err => {
+// trick exit
 process.on('exit', (code) => {
   let jsonStr = JSON.stringify(postsList.sort((a, b) => {
     return new Date(b.birthtime) - new Date(a.birthtime)
   }))
+  console.timeEnd('async')
 
   // save list.json
   fs.writeFileSync(listPath, jsonStr)
   console.log('list.json 数据写入成功！\n ', listPath, '\n')
-
 })
