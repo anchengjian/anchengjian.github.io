@@ -6,8 +6,8 @@
       li.card(v-for="item in postsList")
         router-link.item-link(:to="{path: item.path}")
           h2.title {{item.name}}
+          .dates {{item.birthtime | date}}
           p.summary {{item.summary}}
-          span.dates {{item.birthtime | date}}
 </template>
 <script>
   import postsService from '@/services/posts'
@@ -80,7 +80,7 @@
     color: #aaa;
     word-break: break-all;
   }
-
+  
   .dates {
     position: absolute;
     right: 0;
@@ -89,5 +89,13 @@
     font-weight: 300;
     line-height: 32px;
     color: #bbb;
+  }
+  
+  @media (max-width: 799px) {
+    .dates {
+      position: static;
+      right: auto;
+      top: 0;
+    }
   }
 </style>

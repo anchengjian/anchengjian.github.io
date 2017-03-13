@@ -8,7 +8,6 @@ Vue.use(Router)
 const router = new Router({
   mode: 'hash', // pure browser, so required!
   linkActiveClass: 'is-active',
-  scrollBehavior: () => ({ y: 0 }),
   routes: routesMap
 })
 

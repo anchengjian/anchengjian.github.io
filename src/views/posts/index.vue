@@ -49,6 +49,8 @@
           console.log(err)
           this.loading = false
         })
+
+      document.body.scrollTop = 0
     }
   }
 </script>
