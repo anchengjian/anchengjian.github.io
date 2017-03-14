@@ -35,7 +35,7 @@
 </script>
 <style scoped>
   .post-container {
-    padding: 100px 0;
+    padding: 50px 0;
     text-align: center;
   }
   

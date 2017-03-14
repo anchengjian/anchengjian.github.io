@@ -11,7 +11,7 @@
 </script>
 <style scoped>
   .not-found-container {
-    padding: 100px 0;
+    padding: 50px 0;
   }
   
   .not-found {

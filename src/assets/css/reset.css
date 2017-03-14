@@ -12,7 +12,14 @@ body {
 
 html, body, ul, ol, h1, h2, h3, h4, h5, h6, p {
   padding: 0;
+}
+
+html, body {
   margin: 0;
+}
+
+ul, ol {
+  padding-left: 1em;
 }
 
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {

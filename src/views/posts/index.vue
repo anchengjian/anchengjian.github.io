@@ -61,6 +61,7 @@
   
   pre code {
     display: block;
+    max-height: 600px;
     margin: 0;
     padding: 60px 20px 20px;
     border-radius: 8px 8px 5px 5px;
@@ -68,17 +69,17 @@
     line-height: 1.4;
     background-color: rgb(39, 40, 34);
     color: #ccc;
-    overflow-x: auto;
+    overflow: auto;
     &::before {
       content: attr(class);
-      color: #fff;
-      height: 38px;
-      line-height: 38px;
-      font-size: 16px;
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
+      color: #fff;
+      height: 38px;
+      line-height: 38px;
+      font-size: 16px;
       border-radius: 5px 5px 0 0;
       background-image: linear-gradient(#e8e7e8, #d3d2d3);
       font-family: 'Source Sans Pro', sans-serif;
@@ -116,14 +117,18 @@
     word-break: break-word;
   }
   
-  .article-container img {
-    margin: 10px;
+  .article-container img,
+  pre {
     box-shadow: 0px 4px 15px rgba(0, 0, 0, .1);
     max-width: 100%;
     transition: box-shadow .3s ease;
     &:hover {
       box-shadow: 0px 4px 15px rgba(0, 0, 0, .2);
     }
+  }
+  
+  .article-container img {
+    margin: 10px;
   }
   
   @media (max-width: 768px) {
