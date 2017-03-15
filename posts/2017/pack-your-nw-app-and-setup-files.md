@@ -2,7 +2,7 @@
 
 > 这可能是中文史上最详细的 NW.js 打包教程
 
-本文适应有一定 js 基础，第一次玩 windows 下 setup 打包的同学，默认的环境 windows。然后，文章太**过于详实**，看完会耗费大量时间，暂时不想实操的，我直接提供一个 vue-nw-seed 种子项目，包含了当前文章的所有代码。   
+本文适应有一定 js 基础，第一次玩 windows 下 setup 打包的同学，默认的环境 windows。然后，文章太**过于详实**，看完会耗费大量时间，暂时不想实操的，我会直接提供一个 [vue-nw-seed](https://github.com/anchengjian/vue-nw-seed) 种子项目，包含了当前文章的所有代码。   
 
 **本文涉及到的点：**
 * Node.js 打包 zip 、文件处理、crypto 提取 MD5 、iconv 处理字符串等
@@ -366,7 +366,7 @@ function copyFile(src, dst) {
 
 ### 2、获取 update.json 并检查更新
 上代码，代码切换到 src 目录中，在我们的应用代码中写上 `utils/update.js` 的相关方法。具体的几个小方法，看注释吧。
-```javascript
+``` javascript
 import { updateApi } from 'config/app'
 import { App } from 'nw.gui'
 
@@ -394,7 +394,7 @@ export function checkUpdate() {
 ```
 
 然后在 main.js 中进行更新检查
-```javascript
+``` javascript
 // 优先更新
 import { checkUpdate } from '@/utils/update'
 if (process.env.NODE_ENV !== 'development') checkUpdate()
@@ -402,7 +402,7 @@ if (process.env.NODE_ENV !== 'development') checkUpdate()
 
 ### 3、更新
 在上面的基础上做增量更新，基本思路就是用 Node.js 去下载 nw 包到应用所在的目录，并直接替换掉原有的 package.nw ，再重启一下自己就搞定了；全量更新的话，就直接打开应用的下载页面，让用户自行下载覆盖安装就搞定了。  
-```javascript
+``` javascript
 // 下载 nw 包
 export function updatePackage() {
   return new Promise((resolve, reject) => {

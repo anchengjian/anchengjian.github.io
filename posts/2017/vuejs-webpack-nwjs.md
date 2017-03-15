@@ -26,7 +26,7 @@
 #### 1) 能顺利翻墙
 NW.js 开发者们提供了 [nwjs/npm-installer](https://github.com/nwjs/npm-installer)   
 如果您的网速较好，翻墙顺利的话，可以直接
-```
+``` bash
 npm install nw --nwjs_build_type=sdk --save
 ```
 
@@ -112,7 +112,7 @@ E:\code\vue-webpack-nw> npm i nw --save
 
 #### 2) build/webpack.base.conf.js
 增加基础配置
-```
+``` javascript
 module.exports = {
   // ...
   // 以下为新加内容
@@ -182,7 +182,7 @@ function requestGet(path, callback) {
 
 #### 4) build/dev-server.js
 在其最末尾修改一下，不需要打开浏览器，而是需要其代码驱动打开nw.exe
-```
+``` javascript
   // when env is testing, don't need open it
   if (process.env.NODE_ENV !== 'testing') {
     // opn(uri)
@@ -195,7 +195,7 @@ function requestGet(path, callback) {
 
 #### 5) build/dev-client.js
 这个时候直接在执行 `npm run dev` 正常的话是可以用 nw.exe 打开当前项目代码，但接着就可以看到有一个报错
-```
+``` javascript
 GET chrome-extension://hbdgiajgpfdfalonjhdcdmbcmillcjed/__webpack_hmr net::ERR_FILE_NOT_FOUND
 ```
 原因也就是webpack请求的时候根据当前页面地址来的，没想到还有 nw 这么个环境   
@@ -203,7 +203,7 @@ GET chrome-extension://hbdgiajgpfdfalonjhdcdmbcmillcjed/__webpack_hmr net::ERR_F
 同时请注意`path=__webpack_hmr`
 
 改`hotClient`这一行代码为这样子
-```
+``` javascript
 var hotClient = require('webpack-hot-middleware/client?noInfo=true&reload=true&dynamicPublicPath=true&path=__webpack_hmr')
 ```
 这样配置的文档来源： [webpack-hot-middleware](https://github.com/glenjamin/webpack-hot-middleware#documentation)
