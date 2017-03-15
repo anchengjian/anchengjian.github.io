@@ -1,6 +1,18 @@
 # 打包NW.js应用和制作windows安装文件
 
-本文适应有一定 js 基础，但第一次玩 windows 下 setup 打包的同学，默认的环境 windows。   
+> 这可能是中文史上最详细的 NW.js 打包教程
+
+本文适应有一定 js 基础，第一次玩 windows 下 setup 打包的同学，默认的环境 windows。然后，文章太**过于详实**，看完会耗费大量时间，暂时不想实操的，我直接提供一个 vue-nw-seed 种子项目，包含了当前文章的所有代码。   
+
+**本文涉及到的点：**
+* Node.js 打包 zip 、文件处理、crypto 提取 MD5 、iconv 处理字符串等
+* Resource Hacker 配置应用的权限、图标、版权等
+* InnoSetup 制作安装包、iss 文件配置
+* NW.js 应用的更新（增量、全量更新）
+* ...
+
+**未涉及到的点：**
+* 代码加密，本着前端的心态做的桌面端应用，代码 Uglify 后就已经不可看了。如果有机密代码或者加密算法等需要另外考虑，不在本文的讨论范围，提供一个官方文档 [Protect JavaScript Source Code](http://docs.nwjs.io/en/latest/For%20Users/Advanced/Protect%20JavaScript%20Source%20Code/)
 
 ## 一、折腾能力强，直接上文档   
 1. [How-to-package-and-distribute-your-apps](https://github.com/nwjs/nw.js/wiki/How-to-package-and-distribute-your-apps)
@@ -11,12 +23,13 @@
 对新手友好。。。还有个 NW.js 的打包在 gayhub 上还专门有个 npm 包 [nw-builder](https://github.com/nwjs/nw-builder) ，这个用起来就更简单了，我连示例都不想写的那种简单。然后这儿需要下载 NW.js 的 SDK 或者 NORMAL 的包，方法同我上一篇文章 [用 vue2 和 webpack 快速建构 NW.js 项目](http://anchengjian.com/#/posts/2017/vuejs-webpack-nwjs.md) 中 `网络不太好` 部分   
 
 ## 二、自助打包
-NW.js 被打包出来后是一个文件夹，里面有整个 runtimes 和一个 exe 文件，这时候整个打包就成功了，差不多有 100MB 左右。  
+NW.js 被打包出来后是一个文件夹，里面有整个 runtime 和一个 exe 文件，这时候整个打包就成功了，差不多有 100MB 左右。  
 但是，我们的应用不再是给内部使用，给用户下载总不能直接给用户拷贝一个文件夹或者下载 zip 压缩包，那样忒不靠谱的样子，还以为是啥病毒呢。  
 
 我们能不能就像吃自助餐那样，想吃啥就拿啥，想打包成啥样就弄成啥样。  
 
-**当然可以** 整体思路就是自己搞一个 runtime，然后用 Node.js 对打包好的代码进行 zip 压缩为 `package.nw`，然后放到 runtime 中，再用官方推荐的 InnoSetup 来打包成一个 setup.exe。
+**实现思路**  
+自己搞一个 runtime，然后用 Node.js 对打包好的代码进行 zip 压缩为 `package.nw`，然后放到 runtime 中，再用官方推荐的 InnoSetup 来打包成一个 setup.exe。
 
 ### 1. XP 兼容性问题
 使用 NW.js 的主要优势是兼容 XP，教育行业这个真的很重要呀。。。   
@@ -162,6 +175,9 @@ Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChang
 
 再然后此 iss 配合 `makeExeSetup` 使用，格外酸爽，请忽略那一串 replace，233333333  
 ``` javascript
+// 新依赖，用于处理 utf 和 ansi 的字符串
+const iconv = require('iconv-lite')
+
 function makeExeSetup(opt) {
   const { issPath, outputPath, mainPackage, runtimePath, resourcesPath, appPublisher, appURL, appId } = opt
   const { name, appName, version } = require(mainPackage)
@@ -212,7 +228,232 @@ function makeExeSetup(opt) {
 如果你的应用只要能用就行了，那这一步已经完全够了。   
 但技术人怎么能不折腾，下面，我们来搞炫酷的安装包的制作方法。   
 
-先摆一个被我模仿的例子 [INNOSETUP 仿有道云安装包界面](http://blog.csdn.net/HarounCloud/article/details/50613590) 
+先摆一个被我模仿的例子 [INNOSETUP 仿有道云安装包界面](http://blog.csdn.net/HarounCloud/article/details/50613590)，同时还有个参考资料:[互联网软件的安装包界面设计-Inno setup](http://blog.csdn.net/oceanlucy/article/details/50033773) 真心吐个槽，这方面的资料真少。。。
+
+我其实都按照已有的素材包写好了一个了，但我们的 ui 还没设计出更漂亮的安装界面出来，所以，我就暂时不放相关资源和效果了。
 
 ## 四、应用的更新
+这一块，应该是最轻松的，蛤。  
 
+我们的更新策略分为两种，一种是只更新我们的业务代码，每次只需要下载1MB多的业务代码就搞定，走增量更新渠道；另一种是更新了我们的 runtime ，或者其他啥玩意的重要更新，需要全量更新，走全量更新的渠道。  
+
+**实现思路**  
+在打包的时候把版本和更新信息写入到 `update.json` 中，在每次客户端打开的时候都去请求这个 json ，检查 json 中版本和客户端版本是否匹配，不匹配则根据 json 中的约定规则进行增量更新或全量更新。
+
+### 1、准备好更新文件
+一个开发原则是能懒就懒，能用工具做的就一定要用工具做。蛤蛤，在这个原则的坚持下，我们来继续优化上文提到的打包建构。  
+
+用 Node.js 把之前临时放在 runtime 中的 package.nw (zip) 包拷贝到 output 目录，再根据 `changelog.txt` 文件写更新信息到 update.json 中。
+
+准备一个 changelog.txt 文件在 config 配置目录下，大概就长这样子，每次更新以`---` 进行分割，第一行是版本，后面是更新信息：
+```
+0.1.0
+- 程序员 peter 开始开发了！
+- 顺便，请老板给 peter 涨工资。
+---
+1.0.0
+- 客户端正式版成功发布啦！
+- 同时，peter 因为要求涨工资已被打残住院中，所以暂时不会有其他更新。
+---
+```
+有同学问我，为啥要这么设计个 log.txt 出来，不直接用 json 等其他形式进行描述？  
+因为这个文件在未来可能要被打包到应用中，连同 license 文件进行打包；还有就是分离这部分描述，更易扩展。  
+
+然后写一读取这个 log 的方法
+``` javascript
+function getLatestLogBycheckVersion({ changelogPath, mainPackage }) {
+  // get package.json by package
+  const packageJson = require(mainPackage)
+
+  // check version
+  // 大于等于3是因为合法的版本信息最少 "---" 有3个长度
+  const changeLogArr = fs.readFileSync(changelogPath, 'utf-8').split('---').filter(v => v.trim().length >= 3)
+  const latestInfo = changeLogArr.pop().split('\n').map(v => v.trim()).filter(v => v.length)
+  const version = latestInfo[0]
+
+  if (packageJson.version !== version) {
+    // 更新 package.json 的版本
+    packageJson.version = version
+    fs.writeFileSync(mainPackage, JSON.stringify(packageJson, null, '  '), 'utf-8')
+  }
+  return latestInfo
+}
+
+// 这就是全局的 options
+opt.latestLog = getLatestLogBycheckVersion(opt)
+
+// 更新约定，用来判断当前版本是否需要增量更新
+opt.noIncremental = process.argv.indexOf('--noIncremental') >= 0
+```
+
+**增量更新的约定**  
+通过 `process.argv` 来检测当前是否需要增量更新，并写入到 options 中，这一点看起来有点稍微繁琐，如果有其他更好的点子，欢迎踊跃来提 [issue](https://github.com/anchengjian/anchengjian.github.io/issues) 或者直接私信我，谢谢！  
+
+接下来继续处理打包完成的系列流程，需求是要移动 nw 到 output 目录，还要写一个 update.json 
+``` javascript
+const crypto = require('crypto')
+
+function finishedPackage(opt) {
+  const { mainPackage, outputPath, latestLog, outZipPath, updateServerPath, noIncremental } = opt
+  const { name, appName, version } = require(mainPackage)
+
+  let versionCode = parseInt(version.replace(/\./g, ''))
+  let updateDesc = latestLog.slice(1).join('#%#')
+
+  let outNWName = `${name}-v${version}.nw`
+  let outNWPath = path.resolve(outputPath, outNWName)
+  let updateJsonPath = path.resolve(outputPath, 'update.json')
+
+  // write update.json
+  let updateJson = {
+    appName,
+    version,
+    versionCode,
+    requiredVersion: version,
+    requiredVersionCode: versionCode,
+    updateDesc,
+    filePath: updateServerPath + outNWName,
+    incremental: !noIncremental
+  }
+
+  // fileSize and MD5
+  getMd5ByFile(outZipPath, (err, hexStr) => {
+    if (err) throw err
+    updateJson.MD5 = hexStr
+    updateJson.fileSize = fs.statSync(outZipPath).size
+    fs.writeFileSync(updateJsonPath, JSON.stringify(updateJson, null, '  '), 'utf-8')
+
+    copyFile(outZipPath, outNWPath)
+    fs.unlink(outZipPath, err => err && console.error(err))
+  })
+}
+
+function getMd5ByFile(filePath, callback) {
+  let rs = fs.createReadStream(filePath)
+  let hash = crypto.createHash('md5')
+  rs.on('error', err => {
+    if (typeof callback === 'function') callback(err)
+  })
+  rs.on('data', hash.update.bind(hash))
+  rs.on('end', () => {
+    if (typeof callback === 'function') callback(null, hash.digest('hex'))
+  })
+}
+
+function copyFile(src, dst) {
+  fs.createReadStream(src).pipe(fs.createWriteStream(dst))
+}
+```
+
+整个打包完了差不多就这样子了
+![output-dir](/posts/assets/imgs/nw/output-dir.jpg)
+
+那个 update.json 里面的实际内容就是这些
+``` json
+{
+  "appName": "豆豆数学",
+  "version": "1.0.1-beta19",
+  "versionCode": 101,
+  "requiredVersion": "1.0.1-beta19",
+  "requiredVersionCode": 101,
+  "updateDesc": "- 程序员 peter 无话可说",
+  "filePath": "http://upgrade.iclassedu.com/doudou/upgrade/teacher/doudou-v1.0.1-beta19.nw",
+  "incremental": true,
+  "MD5": "9be46fc8fb04d38449eeb4358c3b5a31",
+  "fileSize": 5469
+}
+```
+
+### 2、获取 update.json 并检查更新
+上代码，代码切换到 src 目录中，在我们的应用代码中写上 `utils/update.js` 的相关方法。具体的几个小方法，看注释吧。
+```javascript
+import { updateApi } from 'config/app'
+import { App } from 'nw.gui'
+
+const options = { method: 'GET', mode: 'cors', credentials: 'include' }
+let tmpUpdateJson = null
+
+// 请求 update.json，返回的是 promise 类型的 json
+export function getUpdateJson(noCache) {
+  if (!noCache && tmpUpdateJson) return new Promise((resolve, reject) => resolve(tmpUpdateJson))
+  return window.fetch(updateApi + '?' + (new Date().getTime()), options)
+    .then(resp => resp.json())
+    .then(json => {
+      tmpUpdateJson = json
+      return tmpUpdateJson
+    })
+}
+
+// 检查版本，如果有更新则跳转到更新页面
+export function checkUpdate() {
+  getUpdateJson().then(json => {
+    if (json.version === App.manifest.version) return
+    setTimeout(() => { window.location.hash = '/update' }, 500)
+  })
+}
+```
+
+然后在 main.js 中进行更新检查
+```javascript
+// 优先更新
+import { checkUpdate } from '@/utils/update'
+if (process.env.NODE_ENV !== 'development') checkUpdate()
+```
+
+### 3、更新
+在上面的基础上做增量更新，基本思路就是用 Node.js 去下载 nw 包到应用所在的目录，并直接替换掉原有的 package.nw ，再重启一下自己就搞定了；全量更新的话，就直接打开应用的下载页面，让用户自行下载覆盖安装就搞定了。  
+```javascript
+// 下载 nw 包
+export function updatePackage() {
+  return new Promise((resolve, reject) => {
+    getUpdateJson().then(json => {
+      // 全量更新
+      if (!json.incremental) {
+        Shell.openExternal(getSetupApi)
+        return reject({ message: '请下载最新版本，再覆盖安装' })
+      }
+
+      // 增量更新
+      let packageZip = fs.createWriteStream(tmpNWPath)
+      http
+        .get(json.filePath, res => {
+          if (res.statusCode < 200 || res.statusCode >= 300) return reject({ message: '下载出错，请稍后重试' })
+          res.on('end', () => {
+            if (fs.statSync(tmpNWPath).size < 10) return reject({ message: '更新包出错，请稍后重试' })
+            fs.renameSync(tmpNWPath, appPath)
+            resolve(json)
+          })
+          res.pipe(packageZip)
+        })
+        .on('error', reject)
+    })
+  })
+}
+
+// 重启自己
+export function restartSelf(waitTime) {
+  setTimeout(() => {
+    require('child_process').spawn('restart.bat', [], { detached: true, cwd: rootPath })
+  }, ~~waitTime || 2000)
+}
+```
+
+这儿有个小小的 hack ，仔细看看代码的同学应该已经发现了 `restart.bat` 。我尝试了很多办法，想让 NW.exe 重启自己，最终多番尝试后失败了。。。就写了个 bat 来重启自己。
+``` bat
+taskkill /im doudou.exe /f
+start .\doudou.exe
+exit
+```
+
+如果有其他更好的办法，欢迎踊跃来提 [issue](https://github.com/anchengjian/anchengjian.github.io/issues) 或者直接私信我，谢谢！  
+
+可能会有同学会问，为啥不直接下载 exe 包下来，再打开引导安装？  
+我试过了，当应用被安装在 `C:\Program Files` 目录里面，管理员权限都不能写 `.exe` 后缀的文件进去。。。所以，我干脆用浏览器打开我们的应用的下载页，让用户自己去下载后，自己安装算了。这儿应该可以优化，下载到 用户数据目录，或者其他临时目录。  
+
+### 4、update 页面
+这个页面就没啥技术点，就是体力劳动了。根据前面 `getUpdateJson` 方法获得的 json 来渲染出要更新的版本和更新信息，然后提供一个更新按钮，按钮点击后，执行 `updatePackage` 这个方法，如果顺利执行就在 then 里面调用 `restartSelf` 重启自己就行了。
+
+整体效果就是这样的
+![更新效果](/posts/assets/imgs/nw/nw-update-app.gif)
+
+如果对您有用，帮我点个 [star](https://github.com/anchengjian/anchengjian.github.io) ，谢谢！您的支持是我继续更新下去的动力。  
