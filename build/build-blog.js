@@ -10,7 +10,7 @@ const startPath = path.resolve(rootPath, config.rootPath || './posts')
 const listPath = path.resolve(rootPath, config.listPath || './posts/list.json')
 
 // ignore files
-const filterReg = /(^\.)|(list\.json$)/
+const filterReg = /(^\.)|list\.json$|assets/
 
 // summary content
 const summaryLen = 128
@@ -60,7 +60,7 @@ countFiles.on('data', (curPath, stats) => {
     if (err) throw err
 
     let res = {
-      path: curPath.substr(rootPath.length + 1)
+      path: curPath.substr(rootPath.length + 1).replace(/\\/g, '/')
     }
 
     const old = originMap[res.path]
@@ -75,7 +75,7 @@ countFiles.on('data', (curPath, stats) => {
       res.name = path.parse(res.path).name
     }
 
-    res.summary = article.substr(startPos, summaryLen)
+    res.summary = article.substr(startPos, summaryLen) + (article.length > summaryLen ? '...' : '')
 
     postsList.push(res)
   })
