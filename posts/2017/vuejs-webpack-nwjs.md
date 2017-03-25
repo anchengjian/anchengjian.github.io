@@ -1,4 +1,8 @@
-# 用 vue2 和 webpack 快速建构 NW.js 项目
+# 用 vue2 和 webpack 快速建构 NW.js 项目(1)
+
+>经过实践和学习，发现本篇文章部分内容**已经过时**，请看我的关于 Vue 和 NW.js 的 ** [最新文章](https://github.com/anchengjian/anchengjian.github.io/blob/master/posts/2017/vuejs-webpack-nwjs-2.md) ** 和相关实践项目 [vue-nw-seed](https://github.com/anchengjian/vue-nw-seed) 。
+
+---
 
 ## 使用到的技能点
 * vue2
@@ -231,5 +235,5 @@ module.exports = {
 
 至此，一个完整的开发建构就出来，后面慢慢更新产品模式的打包建构。   
 
-原文持续更新: [http://blog.anchengjian.com/#/posts/2017/vuejs-webpack-nwjs.md](http://blog.anchengjian.com/#/posts/2017/vuejs-webpack-nwjs.md)
+原文持续更新: [https://github.com/anchengjian/anchengjian.github.io/blob/master/posts/2017/vuejs-webpack-nwjs.md](https://github.com/anchengjian/anchengjian.github.io/blob/master/posts/2017/vuejs-webpack-nwjs.md)
 

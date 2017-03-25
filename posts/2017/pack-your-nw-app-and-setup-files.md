@@ -1,8 +1,14 @@
-# 打包NW.js应用和制作windows安装文件
+# 用 vue2 和 webpack 快速建构 NW.js 项目(2)
+## 打包NW.js应用和制作windows安装文件
+
+更新：
+此文章部分技术点已落后，请查看 ** [最新文章](https://github.com/anchengjian/anchengjian.github.io/blob/master/posts/2017/vuejs-webpack-nwjs-2.md) **
+
+---
 
 > 这可能是中文史上最详细的 NW.js 打包教程
 
-本文适应有一定 js 基础，第一次玩 windows 下 setup 打包的同学，默认的环境 windows。然后，文章太**过于详实**，看完会耗费大量时间，暂时不想实操的，我会直接提供一个 [vue-nw-seed](https://github.com/anchengjian/vue-nw-seed) 种子项目，包含了当前文章的所有代码。   
+本文适应有一定 js 基础，第一次玩 windows 下 setup 打包的同学，默认的环境 windows。然后，文章太**过于详实**，看完会耗费大量时间，暂时不想实操的，我会直接提供一个 [vue-nw-seed](https://github.com/anchengjian/vue-nw-seed) 种子项目，包含了当前文章的一些优化点。   
 
 **本文涉及到的点：**
 * Node.js 打包 zip 、文件处理、crypto 提取 MD5 、iconv 处理字符串等
