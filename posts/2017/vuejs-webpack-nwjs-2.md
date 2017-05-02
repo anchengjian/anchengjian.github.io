@@ -326,7 +326,7 @@ Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChang
         resourcesPath: resolve('./build/setup_resources'),  // 上面没说的打包用的 license 和 logo。参见 https://github.com/anchengjian/vue-nw-seed/tree/master/build/setup_resources
         appPublisher: 'vue-nw-seed, Inc.',
         appURL: 'https://github.com/anchengjian/vue-nw-seed',
-        appId: '{{A448363D-3A2F-4800-B62D-8A1C4D8F1115}'  // 如果有就写上
+        appId: '{{A448363D-3A2F-4800-B62D-8A1C4D8F1115}}'  // 如果有就写上
       }
     }
 ```
