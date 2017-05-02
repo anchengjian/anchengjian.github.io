@@ -39,8 +39,13 @@ npm install nw --nwjs_build_type=sdk --save
 这时候可以先下载好 nw 的 sdk 包到本地，墙外地址：[https://dl.nwjs.io/v0.20.1/nwjs-sdk-v0.20.1-win-x64.zip](https://dl.nwjs.io/v0.20.1/nwjs-sdk-v0.20.1-win-x64.zip) （截至目前现在最新的sdk版本是 `0.20.1` ，系统环境是 win10 x64）当然，我作为一个老司机，也有不可推卸的责任，我把我这个包也发到了百度云上了：链接: [http://pan.baidu.com/s/1i52ZO8l](http://pan.baidu.com/s/1i52ZO8l) 密码: 3tt2
 做了点微小的贡献，谢谢大家。
 
-我已经尝试过 `file://` 那个方法不能用了，换server模式吧
+~~我已经尝试过 `file://` 那个方法不能用了，换server模式吧~~
+通过和作者沟通[load local file is error!!! #54](https://github.com/nwjs/npm-installer/issues/54)，`file://` 协议安装这个问题已经解决了。安装方式很简单
+``` bash
+npm i nw --nwjs_urlbase=file://C:\\Users\\anchengjian\\Downloads --save 
+```
 
+**server模式安装方法**
 切换命令行目录到当前sdk包所在位置
 ```
 C:\Users\anchengjian\Downloads> mkdir 0.20.1
