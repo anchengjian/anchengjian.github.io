@@ -97,11 +97,17 @@ var webpackConfig = merge(baseWebpackConfig, {
       filename: appInfo.serviceWorkerPath,
       minify: true,
       staticFileGlobs: [
-        'posts/**/**',
+        'posts/2016/**',
+        'posts/2017/**',
+        'posts/other/**',
+        'posts/**.*',
+        // 'posts/**/**',
         'static/**/**'
       ],
       mergeStaticsConfig: true,
-      staticFileGlobsIgnorePatterns: [/\.map$/]
+      // There's a mysterious bug here: staticFileGlobsIgnorePatterns
+      // https://github.com/goldhand/sw-precache-webpack-plugin
+      staticFileGlobsIgnorePatterns: [/^posts\/assets/, /\.gif$/]
     })
   ]
 })
