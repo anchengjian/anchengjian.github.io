@@ -238,7 +238,7 @@ fs.writeFile(manifestPath, JSON.stringify(manifest, null, '  '), 'utf-8', functi
 **主要思路**：用 Node.js 操作 iss 文件，再借助官方推荐的 innosetup 进行打包。
 
 继续录一个 打包 exe 文件的 demo
-![seed-npm-run-build](/posts/assets/imgs/nw//seed-setup.gif)
+![seed-npm-run-build](/posts/assets/imgs/nw/seed-setup.gif)
 
 ### 1、安装相关依赖
 ``` bash
