@@ -19,6 +19,9 @@ npm run build --report
 
 # build for posts and get list.json
 npm run blog
+
+# build with pwa
+npm run build ZZSellerTip
 ```
 
 简单的记录一点自己的见闻，如果喜欢的话请点个 star ，蛤蛤，谢谢。

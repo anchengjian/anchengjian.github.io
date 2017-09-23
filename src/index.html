@@ -29,6 +29,13 @@
         <div class="bounce"></div>
       </div>
     </main>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function () {
+          navigator.serviceWorker.register('<%= htmlWebpackPlugin.options.serviceWorkerPath %>');
+        });
+      }
+    </script>
   </body>
 
 </html>

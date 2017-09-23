@@ -5,6 +5,7 @@ var merge = require('webpack-merge')
 var baseWebpackConfig = require('./webpack.base.conf')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
+var SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
 
 // https://github.com/ampedandwired/html-webpack-plugin
 var htmlOptions = Object.assign({}, require('../config/app').appInfo, {
@@ -32,6 +33,12 @@ module.exports = merge(baseWebpackConfig, {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new HtmlWebpackPlugin(htmlOptions),
-    new FriendlyErrorsPlugin()
+    new FriendlyErrorsPlugin(),
+    // pwa
+    new SWPrecacheWebpackPlugin({
+      cacheId: 'blog.anchengjian.com',
+      filename: 'service-worker.js',
+      minify: false
+    })
   ]
 })

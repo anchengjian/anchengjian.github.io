@@ -8,6 +8,7 @@ var CopyWebpackPlugin = require('copy-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+var SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
 
 var env = config.build.env
 
@@ -15,15 +16,15 @@ var env = config.build.env
 // you can customize output by editing /index.html
 // see https://github.com/ampedandwired/html-webpack-plugin
 var htmlOptions = Object.assign({}, require('../config/app').appInfo, {
-  filename: config.build.index,
+  filename: 'index.html',
   template: 'src/index.html',
   inject: true,
   minify: {
     removeComments: true,
     collapseWhitespace: true,
     removeAttributeQuotes: true
-      // more options:
-      // https://github.com/kangax/html-minifier#options-quick-reference
+    // more options:
+    // https://github.com/kangax/html-minifier#options-quick-reference
   },
   // necessary to consistently work with multiple chunks via CommonsChunkPlugin
   chunksSortMode: 'dependency'
@@ -86,7 +87,19 @@ var webpackConfig = merge(baseWebpackConfig, {
       from: path.resolve(__dirname, '../static'),
       to: config.build.assetsSubDirectory,
       ignore: ['.*']
-    }])
+    }]),
+    // copy custom posts assets
+    new CopyWebpackPlugin([{
+      from: path.resolve(__dirname, config.build.postsRoot),
+      to: 'posts',
+      ignore: ['.*']
+    }]),
+    // pwa
+    new SWPrecacheWebpackPlugin({
+      cacheId: 'blog.anchengjian.com',
+      filename: 'service-worker.js',
+      minify: true
+    })
   ]
 })
 

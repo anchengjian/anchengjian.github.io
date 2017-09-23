@@ -14,7 +14,8 @@ exports.appInfo = {
   copyRight: '© Copyright 2017 不爱吃西红柿的鱼',
   headurl: '/static/imgs/logo-square.png',
   rootPath: 'posts/',
-  listPath: 'posts/list.json'
+  listPath: 'posts/list.json',
+  serviceWorkerPath: 'service-worker.js'
 }
 
 // 全局的 ajax host 配置
