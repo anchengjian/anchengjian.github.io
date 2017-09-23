@@ -23,7 +23,7 @@ class Walk extends EventEmitter {
     this.stepHandle(filePath)
   }
   stepHandle(filePath) {
-    if (!filePath || !util.isString(filePath)) return this.emit('end')
+    if (!filePath || !util.isString(filePath)) return this.walkComplete()
 
     fs.readdir(filePath, (err, files) => {
       if (err) return console.error(err, files)
@@ -35,11 +35,22 @@ class Walk extends EventEmitter {
         const curPath = path.resolve(filePath, fileName)
         fs.stat(curPath, (err, stats) => {
           if (err) return console.error(err)
-          if (stats.isFile()) this.emit('data', curPath, stats)
-          else if (stats.isDirectory()) return this.stepHandle(curPath)
+
+          if (stats.isFile()) {
+            this.emit('data', curPath, stats)
+            this.walkComplete()
+          } else if (stats.isDirectory()) {
+            this.stepHandle(curPath)
+          }
         })
       })
     })
+  }
+  walkComplete() {
+    clearTimeout(this.isWalkComplete)
+    this.isWalkComplete = setTimeout(() => {
+      this.emit('end')
+    }, 0)
   }
 }
 
@@ -51,7 +62,7 @@ try {
   require(listPath).forEach(item => originMap[item.path] = item)
 } catch (e) {}
 
-console.time('async')
+// console.time('async')
 const postsList = []
 const countFiles = new Walk(startPath, filterReg)
 
@@ -81,12 +92,12 @@ countFiles.on('data', (curPath, stats) => {
   })
 })
 
-// trick exit
-process.on('exit', (code) => {
-  let jsonStr = JSON.stringify(postsList.sort((a, b) => {
+// walk success
+countFiles.on('end', () => {
+  const jsonStr = JSON.stringify(postsList.sort((a, b) => {
     return new Date(b.birthtime) - new Date(a.birthtime)
   }))
-  console.timeEnd('async')
+  // console.timeEnd('async')
 
   // save list.json
   fs.writeFileSync(listPath, jsonStr)
