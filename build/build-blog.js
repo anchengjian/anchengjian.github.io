@@ -67,39 +67,37 @@ const postsList = []
 const countFiles = new Walk(startPath, filterReg)
 
 countFiles.on('data', (curPath, stats) => {
-  fs.readFile(curPath, 'utf-8', (err, article) => {
-    if (err) throw err
+  const article = fs.readFileSync(curPath, 'utf-8')
 
-    let res = {
-      path: curPath.substr(rootPath.length + 1).replace(/\\/g, '/')
-    }
+  let res = {
+    path: curPath.substr(rootPath.length + 1).replace(/\\/g, '/')
+  }
 
-    const old = originMap[res.path]
-    res.birthtime = old ? old.birthtime : stats.mtime
+  const old = originMap[res.path]
+  res.birthtime = old ? old.birthtime : stats.mtime
 
-    let startPos = 0
-    const matchTitle = article.match(/\#(.+)/)
-    if (matchTitle && matchTitle.length > 1) {
-      res.name = matchTitle[1].trim()
-      startPos = matchTitle[0].length
-    } else {
-      res.name = path.parse(res.path).name
-    }
+  let startPos = 0
+  const matchTitle = article.match(/\#(.+)/)
+  if (matchTitle && matchTitle.length > 1) {
+    res.name = matchTitle[1].trim()
+    startPos = matchTitle[0].length
+  } else {
+    res.name = path.parse(res.path).name
+  }
 
-    res.summary = article.substr(startPos, summaryLen) + (article.length > summaryLen ? '...' : '')
+  res.summary = article.substr(startPos, summaryLen) + (article.length > summaryLen ? '...' : '')
 
-    postsList.push(res)
-  })
+  postsList.push(res)
 })
 
 // walk success
 countFiles.on('end', () => {
   const jsonStr = JSON.stringify(postsList.sort((a, b) => {
     return new Date(b.birthtime) - new Date(a.birthtime)
-  }))
+  }), null, '  ')
   // console.timeEnd('async')
 
   // save list.json
   fs.writeFileSync(listPath, jsonStr)
-  console.log('list.json 数据写入成功！\n ', listPath, '\n')
+  console.log(`list.json 数据写入成功！\n 共计文章：${postsList.length}篇\n 所在位置：${listPath}`)
 })
