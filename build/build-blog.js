@@ -50,7 +50,7 @@ class Walk extends EventEmitter {
     clearTimeout(this.isWalkComplete)
     this.isWalkComplete = setTimeout(() => {
       this.emit('end')
-    }, 0)
+    }, 2)
   }
 }
 

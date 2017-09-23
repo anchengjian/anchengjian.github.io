@@ -8,7 +8,8 @@ var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 var SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
 
 // https://github.com/ampedandwired/html-webpack-plugin
-var htmlOptions = Object.assign({}, require('../config/app').appInfo, {
+var appInfo = require('../config/app').appInfo
+var htmlOptions = Object.assign({}, appInfo, {
   filename: 'index.html',
   template: 'src/index.html',
   inject: 'body'
@@ -33,12 +34,6 @@ module.exports = merge(baseWebpackConfig, {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new HtmlWebpackPlugin(htmlOptions),
-    new FriendlyErrorsPlugin(),
-    // pwa
-    new SWPrecacheWebpackPlugin({
-      cacheId: 'blog.anchengjian.com',
-      filename: 'service-worker.js',
-      minify: false
-    })
+    new FriendlyErrorsPlugin()
   ]
 })

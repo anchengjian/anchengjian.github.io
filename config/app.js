@@ -15,6 +15,7 @@ exports.appInfo = {
   headurl: '/static/imgs/logo-square.png',
   rootPath: 'posts/',
   listPath: 'posts/list.json',
+  swCacheId: 'blog',
   serviceWorkerPath: 'service-worker.js'
 }
 

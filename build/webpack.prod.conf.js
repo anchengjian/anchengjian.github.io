@@ -15,7 +15,15 @@ var env = config.build.env
 // generate dist index.html with correct asset hash for caching.
 // you can customize output by editing /index.html
 // see https://github.com/ampedandwired/html-webpack-plugin
-var htmlOptions = Object.assign({}, require('../config/app').appInfo, {
+var appInfo = require('../config/app').appInfo
+var serviceWorkerScript = `<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('${appInfo.serviceWorkerPath}');
+    });
+  }
+</script>`
+var htmlOptions = Object.assign({}, appInfo, {
   filename: 'index.html',
   template: 'src/index.html',
   inject: true,
@@ -27,7 +35,8 @@ var htmlOptions = Object.assign({}, require('../config/app').appInfo, {
     // https://github.com/kangax/html-minifier#options-quick-reference
   },
   // necessary to consistently work with multiple chunks via CommonsChunkPlugin
-  chunksSortMode: 'dependency'
+  chunksSortMode: 'dependency',
+  serviceWorkerScript: serviceWorkerScript
 })
 
 var webpackConfig = merge(baseWebpackConfig, {
@@ -82,23 +91,17 @@ var webpackConfig = merge(baseWebpackConfig, {
       name: 'manifest',
       chunks: ['vendor']
     }),
-    // copy custom static assets
-    new CopyWebpackPlugin([{
-      from: path.resolve(__dirname, '../static'),
-      to: config.build.assetsSubDirectory,
-      ignore: ['.*']
-    }]),
-    // copy custom posts assets
-    new CopyWebpackPlugin([{
-      from: path.resolve(__dirname, config.build.postsRoot),
-      to: 'posts',
-      ignore: ['.*']
-    }]),
     // pwa
     new SWPrecacheWebpackPlugin({
-      cacheId: 'blog.anchengjian.com',
-      filename: 'service-worker.js',
-      minify: true
+      cacheId: appInfo.swCacheId,
+      filename: appInfo.serviceWorkerPath,
+      minify: true,
+      staticFileGlobs: [
+        'posts/**/**',
+        'static/**/**'
+      ],
+      mergeStaticsConfig: true,
+      staticFileGlobsIgnorePatterns: [/\.map$/]
     })
   ]
 })
